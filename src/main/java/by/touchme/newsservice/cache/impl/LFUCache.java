@@ -5,15 +5,14 @@ import by.touchme.newsservice.cache.Cache;
 import java.util.Optional;
 
 public class LFUCache<K, V> implements Cache<K, V> {
-    private int capacity;
+    private final int capacity;
 
     public LFUCache(int capacity) {
         this.capacity = capacity;
     }
 
     @Override
-    public boolean set(K key, V value) {
-        return false;
+    public void set(K key, V value) {
     }
 
     @Override
