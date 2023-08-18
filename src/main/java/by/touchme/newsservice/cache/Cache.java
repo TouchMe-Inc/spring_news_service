@@ -3,8 +3,8 @@ package by.touchme.newsservice.cache;
 import java.util.Optional;
 
 public interface Cache<K, V> {
-    
-    boolean set(K key, V value);
+
+    void set(K key, V value);
 
     Optional<V> get(K key);
 
