@@ -34,8 +34,10 @@ public class LRUCache<K, V> implements Cache<K, V> {
                 this.removeKey(keyRemoved);
             }
 
-            this.data.put(key, value);
-            this.order.addFirst(key);
+            if (value != null) {
+                this.data.put(key, value);
+                this.order.addFirst(key);
+            }
         } finally {
             this.lock.writeLock().unlock();
         }
