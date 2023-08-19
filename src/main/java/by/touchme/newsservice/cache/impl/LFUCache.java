@@ -10,6 +10,7 @@ public class LFUCache<K, V> implements Cache<K, V> {
     private final int capacity;
 
     private final Map<K, V> data;
+
     private final Map<K, Integer> frequency;
 
     private final ReentrantReadWriteLock lock;
