@@ -27,7 +27,7 @@ public class NewsController {
         News news = this.cache.get(id)
                 .orElse(this.newsService.getById(id));
 
-        this.cache.set(id, news);
+        this.cache.put(id, news);
 
         return news;
     }
@@ -43,7 +43,7 @@ public class NewsController {
     public News create(@RequestBody News news) {
         News createdNews = this.newsService.create(news);
 
-        this.cache.set(createdNews.getId(), createdNews);
+        this.cache.put(createdNews.getId(), createdNews);
 
         return createdNews;
     }
@@ -53,7 +53,7 @@ public class NewsController {
     public News updateById(@PathVariable(name = "id") Long id, @RequestBody News news) {
         News updatedNews = this.newsService.updateById(id, news);
 
-        this.cache.set(id, updatedNews);
+        this.cache.put(id, updatedNews);
 
         return updatedNews;
     }
@@ -62,6 +62,6 @@ public class NewsController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable(name = "id") Long id) {
         this.newsService.deleteById(id);
-        this.cache.set(id, null);
+        this.cache.remove(id);
     }
 }

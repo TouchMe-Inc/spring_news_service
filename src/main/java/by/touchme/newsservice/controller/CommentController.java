@@ -26,7 +26,7 @@ public class CommentController {
         Comment comment = this.cache.get(id)
                 .orElse(this.commentService.getById(id));
 
-        this.cache.set(id, comment);
+        this.cache.put(id, comment);
 
         return comment;
     }
@@ -42,7 +42,7 @@ public class CommentController {
     public Comment create(@RequestBody Comment comment) {
         Comment createdComment = this.commentService.create(comment);
 
-        this.cache.set(createdComment.getId(), createdComment);
+        this.cache.put(createdComment.getId(), createdComment);
 
         return createdComment;
     }
@@ -52,7 +52,7 @@ public class CommentController {
     public Comment updateById(@PathVariable(name = "id") Long id, @RequestBody Comment comment) {
         Comment updatedComment = this.commentService.updateById(id, comment);
 
-        this.cache.set(id, updatedComment);
+        this.cache.put(id, updatedComment);
 
         return updatedComment;
     }
@@ -61,6 +61,6 @@ public class CommentController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable(name = "id") Long id) {
         commentService.deleteById(id);
-        this.cache.set(id, null);
+        this.cache.remove(id);
     }
 }
