@@ -23,21 +23,19 @@ public class LRUCache<K, V> implements Cache<K, V> {
     }
 
     @Override
-    public void set(K key, V value) {
+    public void put(K key, V value) {
         this.lock.writeLock().lock();
 
         try {
             if (this.data.containsKey(key)) {
-                this.removeKey(key);
+                this.order.remove(key);
             } else if (this.size() >= this.capacity) {
                 K keyRemoved = this.order.removeLast();
-                this.removeKey(keyRemoved);
+                this.remove(keyRemoved);
             }
 
-            if (value != null) {
-                this.data.put(key, value);
-                this.order.addFirst(key);
-            }
+            this.data.put(key, value);
+            this.order.addFirst(key);
         } finally {
             this.lock.writeLock().unlock();
         }
@@ -48,26 +46,31 @@ public class LRUCache<K, V> implements Cache<K, V> {
         this.lock.readLock().lock();
 
         try {
-            V value = this.data.get(key);
-
-            if (value != null) {
-                this.order.remove(key);
-                this.order.addFirst(key);
-
-                return Optional.of(value);
+            if (!this.data.containsKey(key) || this.isEmpty()) {
+                return Optional.empty();
             }
 
-            return Optional.empty();
+            this.order.remove(key);
+            this.order.addFirst(key);
+
+            return Optional.of(this.data.get(key));
         } finally {
             this.lock.readLock().unlock();
         }
     }
 
     @Override
+    public void remove(K key) {
+        this.data.remove(key);
+        this.order.remove(key);
+    }
+
+    @Override
     public int size() {
         this.lock.readLock().lock();
+
         try {
-            return this.order.size();
+            return this.data.size();
         } finally {
             this.lock.readLock().unlock();
         }
@@ -88,10 +91,5 @@ public class LRUCache<K, V> implements Cache<K, V> {
         } finally {
             this.lock.writeLock().unlock();
         }
-    }
-
-    private void removeKey(K key) {
-        this.data.remove(key);
-        this.order.remove(key);
     }
 }
