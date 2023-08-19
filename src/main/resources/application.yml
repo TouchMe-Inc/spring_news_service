@@ -12,5 +12,5 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 cache:
-  type: lru
   capacity: 10
+  type: lru

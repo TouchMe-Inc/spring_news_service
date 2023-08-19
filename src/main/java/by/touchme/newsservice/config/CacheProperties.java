@@ -1,9 +1,19 @@
 package by.touchme.newsservice.config;
 
+import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @ConfigurationProperties(prefix = "cache")
 @ConfigurationPropertiesScan
-public record CacheProperties(String type, int capacity) {
+@Getter
+public final class CacheProperties {
+
+    private final CacheTypes type;
+    private final int capacity;
+
+    public CacheProperties(CacheTypes type, int capacity) {
+        this.type = type;
+        this.capacity = capacity;
+    }
 }
