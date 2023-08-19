@@ -4,9 +4,11 @@ import java.util.Optional;
 
 public interface Cache<K, V> {
 
-    void set(K key, V value);
+    void put(K key, V value);
 
     Optional<V> get(K key);
+
+    void remove(K key);
 
     int size();
 
