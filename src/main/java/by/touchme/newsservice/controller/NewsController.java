@@ -1,7 +1,6 @@
 package by.touchme.newsservice.controller;
 
 import by.touchme.newsservice.cache.Cache;
-import by.touchme.newsservice.cache.impl.LRUCache;
 import by.touchme.newsservice.entity.News;
 import by.touchme.newsservice.service.NewsService;
 import org.springframework.data.domain.Page;
@@ -17,9 +16,9 @@ public class NewsController {
     private final NewsService newsService;
     private final Cache<Long, News> cache;
 
-    NewsController(NewsService newsService) {
+    NewsController(NewsService newsService,  Cache<Long, News> cache) {
         this.newsService = newsService;
-        this.cache = new LRUCache<>(10);
+        this.cache = cache;
     }
 
     @GetMapping("/{id}")

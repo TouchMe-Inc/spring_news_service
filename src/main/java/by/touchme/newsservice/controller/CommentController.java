@@ -1,7 +1,6 @@
 package by.touchme.newsservice.controller;
 
 import by.touchme.newsservice.cache.Cache;
-import by.touchme.newsservice.cache.impl.LRUCache;
 import by.touchme.newsservice.entity.Comment;
 import by.touchme.newsservice.service.CommentService;
 import org.springframework.data.domain.Page;
@@ -16,9 +15,9 @@ public class CommentController {
     private final CommentService commentService;
     private final Cache<Long, Comment> cache;
 
-    CommentController(CommentService commentService) {
+    CommentController(CommentService commentService, Cache<Long, Comment> cache) {
         this.commentService = commentService;
-        this.cache = new LRUCache<>(10);
+        this.cache = cache;
     }
 
     @GetMapping("/{id}")
