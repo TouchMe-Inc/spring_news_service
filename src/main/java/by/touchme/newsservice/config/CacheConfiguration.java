@@ -4,6 +4,8 @@ package by.touchme.newsservice.config;
 import by.touchme.newsservice.cache.Cache;
 import by.touchme.newsservice.cache.impl.LFUCache;
 import by.touchme.newsservice.cache.impl.LRUCache;
+import by.touchme.newsservice.entity.Comment;
+import by.touchme.newsservice.entity.News;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,14 +22,19 @@ public class CacheConfiguration {
     }
 
     @Bean
-    public Cache<?, ?> cache() {
-        return factoryCache(this.properties.getType(), this.properties.getCapacity());
+    public Cache<Long, News> newsCache() {
+        return this.createCache();
     }
 
-    private Cache<?, ?> factoryCache(CacheTypes type, int capacity) {
-        return switch (type) {
-            case LRU -> new LRUCache<>(capacity);
-            case LFU -> new LFUCache<>(capacity);
+    @Bean
+    public Cache<Long, Comment> commentCache() {
+        return this.createCache();
+    }
+
+    private <K, V> Cache<K, V> createCache() {
+        return switch (this.properties.getType()) {
+            case LRU -> new LRUCache<>(this.properties.getCapacity());
+            case LFU -> new LFUCache<>(this.properties.getCapacity());
         };
     }
 }
