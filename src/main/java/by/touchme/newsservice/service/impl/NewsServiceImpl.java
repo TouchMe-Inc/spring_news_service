@@ -17,38 +17,38 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public News getById(Long id) {
-        return newsRepository
+        return this.newsRepository
                 .findById(id)
                 .orElseThrow(() -> new NewsNotFoundException(id));
     }
 
     @Override
     public Page<News> getPage(Pageable pageable) {
-        return newsRepository.findAll(pageable);
+        return this.newsRepository.findAll(pageable);
     }
 
     @Override
     public News create(News news) {
-        return newsRepository.save(news);
+        return this.newsRepository.save(news);
     }
 
     @Override
     public News updateById(Long id, News news) {
-        if (newsRepository.existsById(id)) {
-            throw new CommentNotFoundException(id);
+        if (!this.newsRepository.existsById(id)) {
+            throw new NewsNotFoundException(id);
         }
 
         news.setId(id);
 
-        return newsRepository.save(news);
+        return this.newsRepository.save(news);
     }
 
     @Override
     public void deleteById(Long id) {
-        News news = newsRepository
-                .findById(id)
-                .orElseThrow(() -> new NewsNotFoundException(id));
+        if (!this.newsRepository.existsById(id)) {
+            throw new NewsNotFoundException(id);
+        }
 
-        newsRepository.deleteById(news.getId());
+        this.newsRepository.deleteById(id);
     }
 }
