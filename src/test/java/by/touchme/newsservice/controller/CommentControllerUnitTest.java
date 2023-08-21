@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -17,13 +16,11 @@ import java.util.Date;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CommentController.class)
-@AutoConfigureRestDocs(outputDir = "target/snippets")
 public class CommentControllerUnitTest {
 
     @Autowired
@@ -47,8 +44,7 @@ public class CommentControllerUnitTest {
                                 .accept(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andDo(document("comment/{methodName}"));
+                .andExpect(status().isOk());
     }
 
     @DisplayName("JUnit test for CommentController.getById")
@@ -61,14 +57,13 @@ public class CommentControllerUnitTest {
                                 .accept(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andDo(document("comment/{methodName}"));
+                .andExpect(status().isOk());
     }
 
     @DisplayName("JUnit test for CommentController.create")
     @Test
     public void create() throws Exception {
-        Comment createComment  = this.getComment();
+        Comment createComment = this.getComment();
 
         Comment createdNews = this.getComment();
         createdNews.setId(1L);
@@ -83,14 +78,13 @@ public class CommentControllerUnitTest {
                                 .content(objectMapper.writeValueAsString(createComment))
                 )
                 .andDo(print())
-                .andExpect(status().isCreated())
-                .andDo(document("comment/{methodName}"));
+                .andExpect(status().isCreated());
     }
 
     @DisplayName("JUnit test for CommentController.updateById")
     @Test
     public void updateById() throws Exception {
-        Comment updateComment  = this.getComment();
+        Comment updateComment = this.getComment();
 
         Comment updatedComment = this.getComment();
         updatedComment.setId(1L);
@@ -105,8 +99,7 @@ public class CommentControllerUnitTest {
                                 .content(objectMapper.writeValueAsString(updateComment))
                 )
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andDo(document("comment/{methodName}"));
+                .andExpect(status().isOk());
     }
 
     @DisplayName("JUnit test for CommentController.deleteById")
@@ -119,8 +112,7 @@ public class CommentControllerUnitTest {
                                 .accept(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andDo(document("comment/{methodName}"));
+                .andExpect(status().isOk());
     }
 
     private Comment getComment() {
