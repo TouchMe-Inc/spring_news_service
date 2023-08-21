@@ -16,7 +16,7 @@ public class NewsController {
     private final NewsService newsService;
     private final Cache<Long, News> cache;
 
-    NewsController(NewsService newsService,  Cache<Long, News> cache) {
+    NewsController(NewsService newsService, Cache<Long, News> cache) {
         this.newsService = newsService;
         this.cache = cache;
     }
