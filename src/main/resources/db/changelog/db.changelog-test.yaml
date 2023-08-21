@@ -3,3 +3,191 @@ databaseChangeLog:
       file: classpath:/db/changelog/changes/0001-create_news_table.yaml
   - include:
       file: classpath:/db/changelog/changes/0002-create_comments_table.yaml
+  - changeSet:
+      id: add_news_data
+      author: TouchMe
+      changes:
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_1"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_2"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_3"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_4"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_5"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_6"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_7"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_8"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_9"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_10"
+              - column:
+                  name: text
+                  value: "My text"
+  - changeSet:
+      id: add_comment_data
+      author: TouchMe
+      changes:
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"

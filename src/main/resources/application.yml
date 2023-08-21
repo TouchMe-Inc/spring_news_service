@@ -10,6 +10,8 @@ spring:
     driverClassName: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    change-log: db/changelog/db.changelog-main.yaml
 
 cache:
   capacity: 10
