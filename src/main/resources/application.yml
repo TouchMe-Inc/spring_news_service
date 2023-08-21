@@ -10,3 +10,7 @@ spring:
     driverClassName: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+cache:
+  capacity: 10
+  type: lru

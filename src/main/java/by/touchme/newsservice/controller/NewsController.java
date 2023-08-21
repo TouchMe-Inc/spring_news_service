@@ -1,47 +1,67 @@
 package by.touchme.newsservice.controller;
 
+import by.touchme.newsservice.cache.Cache;
 import by.touchme.newsservice.entity.News;
 import by.touchme.newsservice.service.NewsService;
-import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-@AllArgsConstructor
+
 @RequestMapping("/v1/news")
 @RestController
 public class NewsController {
 
-    private NewsService newsService;
+    private final NewsService newsService;
+    private final Cache<Long, News> cache;
+
+    NewsController(NewsService newsService,  Cache<Long, News> cache) {
+        this.newsService = newsService;
+        this.cache = cache;
+    }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public News getById(@PathVariable(name = "id") Long id) {
-        return newsService.getById(id);
+        News news = this.cache.get(id)
+                .orElse(this.newsService.getById(id));
+
+        this.cache.put(id, news);
+
+        return news;
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Page<News> getPage(Pageable pageable) {
-        return newsService.getPage(pageable);
+        return this.newsService.getPage(pageable);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public News create(@RequestBody News news) {
-        return newsService.create(news);
+        News createdNews = this.newsService.create(news);
+
+        this.cache.put(createdNews.getId(), createdNews);
+
+        return createdNews;
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public News updateById(@PathVariable(name = "id") Long id, @RequestBody News news) {
-        return newsService.updateById(id, news);
+        News updatedNews = this.newsService.updateById(id, news);
+
+        this.cache.put(id, updatedNews);
+
+        return updatedNews;
     }
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable(name = "id") Long id) {
-        newsService.deleteById(id);
+        this.newsService.deleteById(id);
+        this.cache.remove(id);
     }
 }
