@@ -1,8 +1,11 @@
 package by.touchme.newsservice.controller;
 
-import by.touchme.newsservice.cache.Cache;
 import by.touchme.newsservice.entity.Comment;
+import by.touchme.newsservice.exception.CommentNotFoundException;
 import by.touchme.newsservice.service.CommentService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -13,22 +16,16 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
 
     private final CommentService commentService;
-    private final Cache<Long, Comment> cache;
 
-    CommentController(CommentService commentService, Cache<Long, Comment> cache) {
+    CommentController(CommentService commentService) {
         this.commentService = commentService;
-        this.cache = cache;
     }
 
+    @Cacheable(cacheNames = "comments", key = "#id")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Comment getById(@PathVariable(name = "id") Long id) {
-        Comment comment = this.cache.get(id)
-                .orElse(this.commentService.getById(id));
-
-        this.cache.put(id, comment);
-
-        return comment;
+        return this.commentService.getById(id);
     }
 
     @GetMapping
@@ -37,30 +34,24 @@ public class CommentController {
         return commentService.getPage(pageable);
     }
 
+    @CachePut(cacheNames = "comments", key = "#comment.id")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Comment create(@RequestBody Comment comment) {
-        Comment createdComment = this.commentService.create(comment);
-
-        this.cache.put(createdComment.getId(), createdComment);
-
-        return createdComment;
+        return this.commentService.create(comment);
     }
 
+    @CachePut(cacheNames = "comments", key = "#id")
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Comment updateById(@PathVariable(name = "id") Long id, @RequestBody Comment comment) {
-        Comment updatedComment = this.commentService.updateById(id, comment);
-
-        this.cache.put(id, updatedComment);
-
-        return updatedComment;
+        return this.commentService.updateById(id, comment);
     }
 
+    @CacheEvict(cacheNames = "comments", key = "#id")
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable(name = "id") Long id) {
-        commentService.deleteById(id);
-        this.cache.remove(id);
+        this.commentService.deleteById(id);
     }
 }

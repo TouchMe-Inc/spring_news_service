@@ -1,8 +1,10 @@
 package by.touchme.newsservice.controller;
 
-import by.touchme.newsservice.cache.Cache;
 import by.touchme.newsservice.entity.News;
 import by.touchme.newsservice.service.NewsService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -14,22 +16,16 @@ import org.springframework.web.bind.annotation.*;
 public class NewsController {
 
     private final NewsService newsService;
-    private final Cache<Long, News> cache;
 
-    NewsController(NewsService newsService, Cache<Long, News> cache) {
+    NewsController(NewsService newsService) {
         this.newsService = newsService;
-        this.cache = cache;
     }
 
+    @Cacheable(cacheNames = "news", key = "#id")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public News getById(@PathVariable(name = "id") Long id) {
-        News news = this.cache.get(id)
-                .orElse(this.newsService.getById(id));
-
-        this.cache.put(id, news);
-
-        return news;
+        return this.newsService.getById(id);
     }
 
     @GetMapping
@@ -38,30 +34,24 @@ public class NewsController {
         return this.newsService.getPage(pageable);
     }
 
+    @CachePut(cacheNames = "news", key = "#news.id")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public News create(@RequestBody News news) {
-        News createdNews = this.newsService.create(news);
-
-        this.cache.put(createdNews.getId(), createdNews);
-
-        return createdNews;
+        return this.newsService.create(news);
     }
 
+    @CachePut(cacheNames = "news", key = "#id")
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public News updateById(@PathVariable(name = "id") Long id, @RequestBody News news) {
-        News updatedNews = this.newsService.updateById(id, news);
-
-        this.cache.put(id, updatedNews);
-
-        return updatedNews;
+        return this.newsService.updateById(id, news);
     }
 
+    @CacheEvict(cacheNames = "news", key = "#id")
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable(name = "id") Long id) {
         this.newsService.deleteById(id);
-        this.cache.remove(id);
     }
 }
