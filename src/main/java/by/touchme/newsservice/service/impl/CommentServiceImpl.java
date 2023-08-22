@@ -16,38 +16,38 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment getById(Long id) {
-        return commentRepository
+        return this.commentRepository
                 .findById(id)
                 .orElseThrow(() -> new CommentNotFoundException(id));
     }
 
     @Override
     public Page<Comment> getPage(Pageable pageable) {
-        return commentRepository.findAll(pageable);
+        return this.commentRepository.findAll(pageable);
     }
 
     @Override
     public Comment create(Comment comment) {
-        return commentRepository.save(comment);
+        return this.commentRepository.save(comment);
     }
 
     @Override
     public Comment updateById(Long id, Comment comment) {
-        if (commentRepository.existsById(id)) {
+        if (!this.commentRepository.existsById(id)) {
             throw new CommentNotFoundException(id);
         }
 
         comment.setId(id);
 
-        return commentRepository.save(comment);
+        return this.commentRepository.save(comment);
     }
 
     @Override
     public void deleteById(Long id) {
-        Comment comment = commentRepository
-                .findById(id)
-                .orElseThrow(() -> new CommentNotFoundException(id));
+        if (!this.commentRepository.existsById(id)) {
+            throw new CommentNotFoundException(id);
+        }
 
-        commentRepository.deleteById(comment.getId());
+        this.commentRepository.deleteById(id);
     }
 }

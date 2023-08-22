@@ -16,7 +16,7 @@ public class NewsController {
     private final NewsService newsService;
     private final Cache<Long, News> cache;
 
-    NewsController(NewsService newsService,  Cache<Long, News> cache) {
+    NewsController(NewsService newsService, Cache<Long, News> cache) {
         this.newsService = newsService;
         this.cache = cache;
     }
@@ -49,7 +49,7 @@ public class NewsController {
     }
 
     @PutMapping(value = "/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public News updateById(@PathVariable(name = "id") Long id, @RequestBody News news) {
         News updatedNews = this.newsService.updateById(id, news);
 
