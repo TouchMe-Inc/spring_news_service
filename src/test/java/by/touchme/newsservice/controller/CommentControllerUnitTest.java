@@ -1,6 +1,5 @@
 package by.touchme.newsservice.controller;
 
-import by.touchme.newsservice.cache.Cache;
 import by.touchme.newsservice.entity.Comment;
 import by.touchme.newsservice.service.CommentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,9 +30,6 @@ public class CommentControllerUnitTest {
 
     @MockBean
     private CommentService commentService;
-
-    @MockBean
-    private Cache<Long, Comment> cache;
 
     @DisplayName("JUnit test for CommentController.getPage")
     @Test

@@ -1,6 +1,5 @@
 package by.touchme.newsservice.controller;
 
-import by.touchme.newsservice.cache.Cache;
 import by.touchme.newsservice.entity.News;
 import by.touchme.newsservice.service.NewsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,9 +30,6 @@ public class NewsControllerUnitTest {
 
     @MockBean
     private NewsService newsService;
-
-    @MockBean
-    private Cache<Long, News> cache;
 
     @DisplayName("JUnit test for NewsController.getPage")
     @Test
