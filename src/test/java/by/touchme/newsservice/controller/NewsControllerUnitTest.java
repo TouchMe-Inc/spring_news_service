@@ -103,7 +103,7 @@ public class NewsControllerUnitTest {
                                 .content(objectMapper.writeValueAsString(updateNews))
                 )
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 
     @DisplayName("JUnit test for NewsController.deleteById")

@@ -99,7 +99,7 @@ public class CommentControllerUnitTest {
                                 .content(objectMapper.writeValueAsString(updateComment))
                 )
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 
     @DisplayName("JUnit test for CommentController.deleteById")

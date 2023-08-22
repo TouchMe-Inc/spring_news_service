@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles(profiles = "test")
 @SpringBootTest
 @AutoConfigureMockMvc
-@AutoConfigureRestDocs(outputDir = "target/snippets")
+@AutoConfigureRestDocs
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class NewsControllerIntegrationTest {
 
@@ -111,7 +111,7 @@ public class NewsControllerIntegrationTest {
                                 .content(objectMapper.writeValueAsString(updateNews))
                 )
                 .andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
                 .andDo(document(DOC_IDENTIFIER));
     }
 
