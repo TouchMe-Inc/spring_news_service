@@ -49,7 +49,7 @@ public class NewsController {
     }
 
     @PutMapping(value = "/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public News updateById(@PathVariable(name = "id") Long id, @RequestBody News news) {
         News updatedNews = this.newsService.updateById(id, news);
 

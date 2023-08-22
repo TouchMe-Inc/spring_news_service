@@ -48,7 +48,7 @@ public class CommentController {
     }
 
     @PutMapping(value = "/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public Comment updateById(@PathVariable(name = "id") Long id, @RequestBody Comment comment) {
         Comment updatedComment = this.commentService.updateById(id, comment);
 
