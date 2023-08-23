@@ -1,6 +1,6 @@
 package by.touchme.newsservice.controller;
 
-import by.touchme.newsservice.entity.Comment;
+import by.touchme.newsservice.dto.CommentDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,13 +85,15 @@ public class CommentControllerIntegrationTest {
     @Order(4)
     @Test
     public void create() throws Exception {
-        Comment newComment = this.getComment();
+        CommentDto createComment = new CommentDto();
+        createComment.setUsername("John Doe");
+        createComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
         this.mockMvc.perform(
                         post(URL)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(newComment))
+                                .content(objectMapper.writeValueAsString(createComment))
                 )
                 .andDo(print())
                 .andExpect(status().isCreated())
@@ -102,7 +104,9 @@ public class CommentControllerIntegrationTest {
     @Order(5)
     @Test
     public void updateById() throws Exception {
-        Comment updateComment = this.getComment();
+        CommentDto updateComment = new CommentDto();
+        updateComment.setUsername("John Doe");
+        updateComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
         this.mockMvc.perform(
                         put(URL + "/{id}", CORRECT_ID)
@@ -119,7 +123,9 @@ public class CommentControllerIntegrationTest {
     @Order(6)
     @Test
     public void updateByIdNotFound() throws Exception {
-        Comment updateComment = this.getComment();
+        CommentDto updateComment = new CommentDto();
+        updateComment.setUsername("John Doe");
+        updateComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
         this.mockMvc.perform(
                         put(URL + "/{id}", NOT_FOUND_ID)
@@ -160,13 +166,5 @@ public class CommentControllerIntegrationTest {
                 .andDo(print())
                 .andExpect(status().isNotFound())
                 .andDo(document(DOC_IDENTIFIER));
-    }
-
-    private Comment getComment() {
-        Comment comment = new Comment();
-        comment.setUsername("John Doe");
-        comment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
-
-        return comment;
     }
 }

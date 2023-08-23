@@ -1,6 +1,6 @@
 package by.touchme.newsservice.controller;
 
-import by.touchme.newsservice.entity.News;
+import by.touchme.newsservice.dto.NewsDto;
 import by.touchme.newsservice.service.NewsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -46,8 +46,10 @@ public class NewsControllerUnitTest {
     @DisplayName("JUnit test for NewsController.getById")
     @Test
     public void getById() throws Exception {
-        News firstNews = this.getNews();
+        NewsDto firstNews = new NewsDto();
         firstNews.setId(1L);
+        firstNews.setTitle("Lorem Ipsum");
+        firstNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
         firstNews.setTime(new Date());
 
         when(newsService.getById(any())).thenReturn(firstNews);
@@ -65,9 +67,14 @@ public class NewsControllerUnitTest {
     @DisplayName("JUnit test for NewsController.create")
     @Test
     public void create() throws Exception {
-        News createNews = this.getNews();
-        News createdNews = this.getNews();
+        NewsDto createNews = new NewsDto();
+        createNews.setTitle("Lorem Ipsum");
+        createNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+
+        NewsDto createdNews = new NewsDto();
         createdNews.setId(1L);
+        createdNews.setTitle("Lorem Ipsum");
+        createdNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
         createdNews.setTime(new Date());
 
         when(newsService.create(any())).thenReturn(createdNews);
@@ -85,9 +92,14 @@ public class NewsControllerUnitTest {
     @DisplayName("JUnit test for NewsController.updateById")
     @Test
     public void updateById() throws Exception {
-        News updateNews = this.getNews();
-        News updatedNews = this.getNews();
+        NewsDto updateNews = new NewsDto();
+        updateNews.setTitle("Lorem Ipsum");
+        updateNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+
+        NewsDto updatedNews = new NewsDto();
         updatedNews.setId(1L);
+        updatedNews.setTitle("Lorem Ipsum");
+        updatedNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
         updatedNews.setTime(new Date());
 
         when(newsService.updateById(any(), any())).thenReturn(updatedNews);
@@ -113,13 +125,5 @@ public class NewsControllerUnitTest {
                 )
                 .andDo(print())
                 .andExpect(status().isOk());
-    }
-
-    private News getNews() {
-        News news = new News();
-        news.setTitle("Lorem Ipsum");
-        news.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
-
-        return news;
     }
 }
