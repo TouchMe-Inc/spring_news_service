@@ -1,7 +1,9 @@
 package by.touchme.newsservice.service.impl;
 
+import by.touchme.newsservice.dto.CommentDto;
 import by.touchme.newsservice.entity.Comment;
 import by.touchme.newsservice.exception.CommentNotFoundException;
+import by.touchme.newsservice.mapper.CommentMapper;
 import by.touchme.newsservice.repository.CommentRepository;
 import by.touchme.newsservice.service.CommentService;
 import lombok.AllArgsConstructor;
@@ -13,33 +15,53 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
+    private final CommentMapper commentMapper;
 
     @Override
-    public Comment getById(Long id) {
-        return this.commentRepository
-                .findById(id)
-                .orElseThrow(() -> new CommentNotFoundException(id));
+    public CommentDto getById(Long id) {
+        return this.commentMapper.modelToDto(
+                this.commentRepository
+                        .findById(id)
+                        .orElseThrow(() -> new CommentNotFoundException(id))
+        );
     }
 
     @Override
-    public Page<Comment> getPage(Pageable pageable) {
-        return this.commentRepository.findAll(pageable);
+    public Page<CommentDto> getPage(Pageable pageable) {
+        return null; //return this.commentRepository.findAll(pageable);
     }
 
     @Override
-    public Comment create(Comment comment) {
-        return this.commentRepository.save(comment);
+    public CommentDto create(CommentDto comment) {
+
+        Comment comment1 = this.commentRepository.save(
+                this.commentMapper.dtoToModel(comment)
+        );
+
+        System.out.println(comment1);
+
+        CommentDto dto = this.commentMapper.modelToDto(
+                comment1
+        );
+
+        System.out.println(dto);
+
+        return dto;
     }
 
     @Override
-    public Comment updateById(Long id, Comment comment) {
+    public CommentDto updateById(Long id, CommentDto comment) {
         if (!this.commentRepository.existsById(id)) {
             throw new CommentNotFoundException(id);
         }
 
         comment.setId(id);
 
-        return this.commentRepository.save(comment);
+        return this.commentMapper.modelToDto(
+                this.commentRepository.save(
+                        this.commentMapper.dtoToModel(comment)
+                )
+        );
     }
 
     @Override
