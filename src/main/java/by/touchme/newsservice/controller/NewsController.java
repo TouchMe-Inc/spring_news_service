@@ -1,6 +1,6 @@
 package by.touchme.newsservice.controller;
 
-import by.touchme.newsservice.entity.News;
+import by.touchme.newsservice.dto.NewsDto;
 import by.touchme.newsservice.service.NewsService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -24,27 +24,27 @@ public class NewsController {
     @Cacheable(cacheNames = "news", key = "#id")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public News getById(@PathVariable(name = "id") Long id) {
+    public NewsDto getById(@PathVariable(name = "id") Long id) {
         return this.newsService.getById(id);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<News> getPage(Pageable pageable) {
+    public Page<NewsDto> getPage(Pageable pageable) {
         return this.newsService.getPage(pageable);
     }
 
-    @CachePut(cacheNames = "news", key = "#news.id")
+    @CachePut(cacheNames = "news", key = "#result.id")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public News create(@RequestBody News news) {
+    public NewsDto create(@RequestBody NewsDto news) {
         return this.newsService.create(news);
     }
 
     @CachePut(cacheNames = "news", key = "#id")
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public News updateById(@PathVariable(name = "id") Long id, @RequestBody News news) {
+    public NewsDto updateById(@PathVariable(name = "id") Long id, @RequestBody NewsDto news) {
         return this.newsService.updateById(id, news);
     }
 
