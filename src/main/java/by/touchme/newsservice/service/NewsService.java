@@ -1,17 +1,18 @@
 package by.touchme.newsservice.service;
 
+import by.touchme.newsservice.dto.NewsDto;
 import by.touchme.newsservice.entity.News;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface NewsService {
-    News getById(Long id);
+    NewsDto getById(Long id);
 
-    Page<News> getPage(Pageable pageable);
+    Page<NewsDto> getPage(Pageable pageable);
 
-    News create(News comment);
+    NewsDto create(NewsDto comment);
 
-    News updateById(Long id, News news);
+    NewsDto updateById(Long id, NewsDto news);
 
     void deleteById(Long id);
 }
