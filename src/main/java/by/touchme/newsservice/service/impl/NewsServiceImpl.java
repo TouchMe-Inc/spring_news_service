@@ -1,8 +1,10 @@
 package by.touchme.newsservice.service.impl;
 
+import by.touchme.newsservice.dto.NewsDto;
 import by.touchme.newsservice.entity.News;
 import by.touchme.newsservice.exception.CommentNotFoundException;
 import by.touchme.newsservice.exception.NewsNotFoundException;
+import by.touchme.newsservice.mapper.NewsMapper;
 import by.touchme.newsservice.repository.NewsRepository;
 import by.touchme.newsservice.service.NewsService;
 import lombok.AllArgsConstructor;
@@ -13,34 +15,45 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Service
 public class NewsServiceImpl implements NewsService {
-    private NewsRepository newsRepository;
+    private final NewsRepository newsRepository;
+    private final NewsMapper newsMapper;
 
     @Override
-    public News getById(Long id) {
-        return this.newsRepository
-                .findById(id)
-                .orElseThrow(() -> new NewsNotFoundException(id));
+    public NewsDto getById(Long id) {
+        return this.newsMapper.modelToDto(
+                this.newsRepository
+                        .findById(id)
+                        .orElseThrow(() -> new NewsNotFoundException(id))
+        );
     }
 
     @Override
-    public Page<News> getPage(Pageable pageable) {
-        return this.newsRepository.findAll(pageable);
+    public Page<NewsDto> getPage(Pageable pageable) {
+        return null;//return this.newsRepository.findAll(pageable);
     }
 
     @Override
-    public News create(News news) {
-        return this.newsRepository.save(news);
+    public NewsDto create(NewsDto news) {
+        return this.newsMapper.modelToDto(
+                this.newsRepository.save(
+                        this.newsMapper.dtoToModel(news)
+                )
+        );
     }
 
     @Override
-    public News updateById(Long id, News news) {
+    public NewsDto updateById(Long id, NewsDto news) {
         if (!this.newsRepository.existsById(id)) {
             throw new NewsNotFoundException(id);
         }
 
         news.setId(id);
 
-        return this.newsRepository.save(news);
+        return this.newsMapper.modelToDto(
+                this.newsRepository.save(
+                        this.newsMapper.dtoToModel(news)
+                )
+        );
     }
 
     @Override
