@@ -1,0 +1,95 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_news_data
+      author: TouchMe
+      changes:
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_1"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_2"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_3"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_4"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_5"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_6"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_7"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_8"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_9"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_10"
+              - column:
+                  name: text
+                  value: "My text"

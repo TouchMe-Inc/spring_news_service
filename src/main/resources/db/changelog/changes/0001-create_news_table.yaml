@@ -26,3 +26,4 @@ databaseChangeLog:
               - column:
                   name: time
                   type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP

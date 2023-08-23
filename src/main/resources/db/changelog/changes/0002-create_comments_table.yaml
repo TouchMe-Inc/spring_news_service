@@ -26,6 +26,7 @@ databaseChangeLog:
               - column:
                   name: time
                   type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
               - column:
                   name: news_id
                   type: bigint
