@@ -1,7 +1,6 @@
 package by.touchme.newsservice.controller;
 
-import by.touchme.newsservice.entity.Comment;
-import by.touchme.newsservice.exception.CommentNotFoundException;
+import by.touchme.newsservice.dto.CommentDto;
 import by.touchme.newsservice.service.CommentService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -24,27 +23,27 @@ public class CommentController {
     @Cacheable(cacheNames = "comments", key = "#id")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Comment getById(@PathVariable(name = "id") Long id) {
+    public CommentDto getById(@PathVariable(name = "id") Long id) {
         return this.commentService.getById(id);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<Comment> getPage(Pageable pageable) {
+    public Page<CommentDto> getPage(Pageable pageable) {
         return commentService.getPage(pageable);
     }
 
-    @CachePut(cacheNames = "comments", key = "#comment.id")
+    @CachePut(cacheNames = "comments", key = "#result.id")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Comment create(@RequestBody Comment comment) {
+    public CommentDto create(@RequestBody CommentDto comment) {
         return this.commentService.create(comment);
     }
 
     @CachePut(cacheNames = "comments", key = "#id")
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Comment updateById(@PathVariable(name = "id") Long id, @RequestBody Comment comment) {
+    public CommentDto updateById(@PathVariable(name = "id") Long id, @RequestBody CommentDto comment) {
         return this.commentService.updateById(id, comment);
     }
 
