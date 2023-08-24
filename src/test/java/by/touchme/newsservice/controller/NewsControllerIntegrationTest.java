@@ -1,6 +1,6 @@
 package by.touchme.newsservice.controller;
 
-import by.touchme.newsservice.entity.News;
+import by.touchme.newsservice.dto.NewsDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +85,9 @@ public class NewsControllerIntegrationTest {
     @Order(4)
     @Test
     public void create() throws Exception {
-        News createNews = this.getNews();
+        NewsDto createNews = new NewsDto();
+        createNews.setTitle("Lorem Ipsum");
+        createNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
         this.mockMvc.perform(
                         post(URL)
@@ -102,7 +104,9 @@ public class NewsControllerIntegrationTest {
     @Order(5)
     @Test
     public void updateById() throws Exception {
-        News updateNews = this.getNews();
+        NewsDto updateNews = new NewsDto();
+        updateNews.setTitle("Lorem Ipsum");
+        updateNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
         this.mockMvc.perform(
                         put(URL + "/{id}", CORRECT_ID)
@@ -119,7 +123,9 @@ public class NewsControllerIntegrationTest {
     @Order(6)
     @Test
     public void updateByIdNotFound() throws Exception {
-        News updateNews = this.getNews();
+        NewsDto updateNews = new NewsDto();
+        updateNews.setTitle("Lorem Ipsum");
+        updateNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
         this.mockMvc.perform(
                         put(URL + "/{id}", NOT_FOUND_ID)
@@ -160,13 +166,5 @@ public class NewsControllerIntegrationTest {
                 .andDo(print())
                 .andExpect(status().isNotFound())
                 .andDo(document(DOC_IDENTIFIER));
-    }
-
-    private News getNews() {
-        News news = new News();
-        news.setTitle("Lorem Ipsum");
-        news.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
-
-        return news;
     }
 }

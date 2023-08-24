@@ -1,17 +1,18 @@
 package by.touchme.newsservice.service;
 
+import by.touchme.newsservice.dto.CommentDto;
 import by.touchme.newsservice.entity.Comment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface CommentService {
-    Comment getById(Long id);
+    CommentDto getById(Long id);
 
-    Page<Comment> getPage(Pageable pageable);
+    Page<CommentDto> getPage(Pageable pageable);
 
-    Comment create(Comment comment);
+    CommentDto create(CommentDto comment);
 
-    Comment updateById(Long id, Comment comment);
+    CommentDto updateById(Long id, CommentDto comment);
 
     void deleteById(Long id);
 }

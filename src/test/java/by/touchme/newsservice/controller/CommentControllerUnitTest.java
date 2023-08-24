@@ -1,7 +1,6 @@
 package by.touchme.newsservice.controller;
 
-import by.touchme.newsservice.cache.Cache;
-import by.touchme.newsservice.entity.Comment;
+import by.touchme.newsservice.dto.CommentDto;
 import by.touchme.newsservice.service.CommentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Date;
@@ -20,6 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ActiveProfiles(profiles = "test")
 @WebMvcTest(CommentController.class)
 public class CommentControllerUnitTest {
 
@@ -31,9 +32,6 @@ public class CommentControllerUnitTest {
 
     @MockBean
     private CommentService commentService;
-
-    @MockBean
-    private Cache<Long, Comment> cache;
 
     @DisplayName("JUnit test for CommentController.getPage")
     @Test
@@ -63,13 +61,17 @@ public class CommentControllerUnitTest {
     @DisplayName("JUnit test for CommentController.create")
     @Test
     public void create() throws Exception {
-        Comment createComment = this.getComment();
+        CommentDto createComment = new CommentDto();
+        createComment.setUsername("John Doe");
+        createComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
-        Comment createdNews = this.getComment();
-        createdNews.setId(1L);
-        createdNews.setTime(new Date());
+        CommentDto createdComment = new CommentDto();
+        createdComment.setId(1L);
+        createComment.setUsername("John Snow");
+        createComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+        createdComment.setTime(new Date());
 
-        when(commentService.create(any())).thenReturn(createdNews);
+        when(commentService.create(any())).thenReturn(createdComment);
 
         this.mockMvc.perform(
                         post("/v1/comment")
@@ -84,10 +86,14 @@ public class CommentControllerUnitTest {
     @DisplayName("JUnit test for CommentController.updateById")
     @Test
     public void updateById() throws Exception {
-        Comment updateComment = this.getComment();
+        CommentDto updateComment = new CommentDto();
+        updateComment.setUsername("John Doe");
+        updateComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
-        Comment updatedComment = this.getComment();
+        CommentDto updatedComment = new CommentDto();
         updatedComment.setId(1L);
+        updatedComment.setUsername("John Doe");
+        updatedComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
         updatedComment.setTime(new Date());
 
         when(commentService.updateById(any(), any())).thenReturn(updatedComment);
@@ -113,13 +119,5 @@ public class CommentControllerUnitTest {
                 )
                 .andDo(print())
                 .andExpect(status().isOk());
-    }
-
-    private Comment getComment() {
-        Comment comment = new Comment();
-        comment.setUsername("John Doe");
-        comment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
-
-        return comment;
     }
 }

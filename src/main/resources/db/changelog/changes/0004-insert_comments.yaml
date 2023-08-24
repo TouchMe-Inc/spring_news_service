@@ -1,0 +1,126 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_comment_data
+      author: TouchMe
+      changes:
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: news_id
+                  valueNumeric: 1
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: news_id
+                  type: bigint
+                  valueNumeric: 1
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: news_id
+                  valueNumeric: 1
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: news_id
+                  valueNumeric: 1
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: news_id
+                  valueNumeric: 1
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: news_id
+                  valueNumeric: 1
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: news_id
+                  valueNumeric: 1
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: news_id
+                  valueNumeric: 1
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: news_id
+                  valueNumeric: 1
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: news_id
+                  valueNumeric: 1
+              - column:
+                  name: username
+                  value: "User_A"
+              - column:
+                  name: text
+                  value: "My text"

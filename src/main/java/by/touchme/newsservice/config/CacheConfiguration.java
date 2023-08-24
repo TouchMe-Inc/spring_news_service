@@ -1,17 +1,21 @@
 package by.touchme.newsservice.config;
 
 
-import by.touchme.newsservice.cache.Cache;
-import by.touchme.newsservice.cache.impl.LFUCache;
-import by.touchme.newsservice.cache.impl.LRUCache;
-import by.touchme.newsservice.entity.Comment;
-import by.touchme.newsservice.entity.News;
+import by.touchme.newsservice.cache.LFUCache;
+import by.touchme.newsservice.cache.LRUCache;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Arrays;
+
 
 @EnableConfigurationProperties(CacheProperties.class)
+@EnableCaching
 @Configuration
 public class CacheConfiguration {
 
@@ -22,19 +26,25 @@ public class CacheConfiguration {
     }
 
     @Bean
-    public Cache<Long, News> newsCache() {
-        return this.createCache();
+    public CacheManager cacheManager() {
+        SimpleCacheManager cacheManager = new SimpleCacheManager();
+
+        cacheManager.setCaches(
+                Arrays.asList(
+                        createCache("news"),
+                        createCache("comments")
+                )
+        );
+
+        return cacheManager;
     }
 
-    @Bean
-    public Cache<Long, Comment> commentCache() {
-        return this.createCache();
-    }
+    private Cache createCache(String name) {
+        int capacity = this.properties.getCapacity();
 
-    private <K, V> Cache<K, V> createCache() {
         return switch (this.properties.getType()) {
-            case LRU -> new LRUCache<>(this.properties.getCapacity());
-            case LFU -> new LFUCache<>(this.properties.getCapacity());
+            case LRU -> new LRUCache(name, capacity);
+            case LFU -> new LFUCache(name, capacity);
         };
     }
 }
