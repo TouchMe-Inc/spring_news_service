@@ -11,3 +11,7 @@ spring:
     show-sql: true
   liquibase:
     change-log: db/changelog/db.changelog-test.yaml
+
+cache:
+  capacity: 10
+  type: lru
