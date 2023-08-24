@@ -5,8 +5,8 @@ services:
     image: postgres:13-alpine
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 12345678
-      POSTGRES_DB: test
+      POSTGRES_PASSWORD: mysecretpass
+      POSTGRES_DB: news
     ports:
       - "5432:5432"
     volumes:
@@ -19,9 +19,9 @@ services:
     depends_on:
       - postgres
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/test
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/news
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: 12345678
+      SPRING_DATASOURCE_PASSWORD: mysecretpass
 
 volumes:
   postgres-data:
