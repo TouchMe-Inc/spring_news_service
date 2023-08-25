@@ -71,7 +71,7 @@ public class CommentControllerUnitTest {
         createComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
         createdComment.setTime(new Date());
 
-        when(commentService.create(any())).thenReturn(createdComment);
+        when(commentService.create(createComment)).thenReturn(createdComment);
 
         this.mockMvc.perform(
                         post("/v1/comment")

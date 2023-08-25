@@ -79,7 +79,7 @@ public class NewsControllerUnitTest {
         createdNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
         createdNews.setTime(new Date());
 
-        when(newsService.create(any())).thenReturn(createdNews);
+        when(newsService.create(createNews)).thenReturn(createdNews);
 
         this.mockMvc.perform(
                         post("/v1/news")

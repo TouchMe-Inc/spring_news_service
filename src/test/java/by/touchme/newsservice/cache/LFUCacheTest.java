@@ -3,9 +3,13 @@ package by.touchme.newsservice.cache;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.cache.Cache;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+@ActiveProfiles(profiles = "test")
+@ExtendWith(SpringExtension.class)
 public class LFUCacheTest {
 
     @DisplayName("JUnit test for LFUCache")
@@ -19,7 +23,7 @@ public class LFUCacheTest {
     @Test
     public void getNonExistingCache() {
         Cache cache = new LFUCache("test", 3);
-        Assertions.assertNull(cache.get(ArgumentMatchers.anyString()));
+        Assertions.assertNull(cache.get("1"));
     }
 
     @DisplayName("JUnit test for LFUCache")
