@@ -2,7 +2,6 @@ package by.touchme.newsservice.service.impl;
 
 import by.touchme.newsservice.dto.NewsDto;
 import by.touchme.newsservice.entity.News;
-import by.touchme.newsservice.exception.CommentNotFoundException;
 import by.touchme.newsservice.exception.NewsNotFoundException;
 import by.touchme.newsservice.mapper.NewsMapper;
 import by.touchme.newsservice.repository.NewsRepository;
@@ -29,7 +28,9 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public Page<NewsDto> getPage(Pageable pageable) {
-        return null;//return this.newsRepository.findAll(pageable);
+        Page<News> page = this.newsRepository.findAll(pageable);
+
+        return page.map(this.newsMapper::modelToDto);
     }
 
     @Override
