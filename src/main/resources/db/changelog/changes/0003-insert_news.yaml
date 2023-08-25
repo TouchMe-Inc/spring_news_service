@@ -11,7 +11,7 @@ databaseChangeLog:
                   value: "News_1"
               - column:
                   name: text
-                  value: "My text"
+                  value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
         - insert:
             tableName: news
             columns:
@@ -20,7 +20,7 @@ databaseChangeLog:
                   value: "News_2"
               - column:
                   name: text
-                  value: "My text"
+                  value: "Lacus vestibulum sed arcu non odio euismod"
         - insert:
             tableName: news
             columns:
@@ -29,7 +29,7 @@ databaseChangeLog:
                   value: "News_3"
               - column:
                   name: text
-                  value: "My text"
+                  value: "Mauris rhoncus aenean vel elit scelerisque mauris"
         - insert:
             tableName: news
             columns:
@@ -38,7 +38,7 @@ databaseChangeLog:
                   value: "News_4"
               - column:
                   name: text
-                  value: "My text"
+                  value: "Est placerat in egestas erat imperdiet"
         - insert:
             tableName: news
             columns:
@@ -47,7 +47,7 @@ databaseChangeLog:
                   value: "News_5"
               - column:
                   name: text
-                  value: "My text"
+                  value: "Pretium fusce id velit ut tortor"
         - insert:
             tableName: news
             columns:
@@ -56,7 +56,7 @@ databaseChangeLog:
                   value: "News_6"
               - column:
                   name: text
-                  value: "My text"
+                  value: "Egestas sed sed risus pretium quam vulputate dignissim"
         - insert:
             tableName: news
             columns:
@@ -65,7 +65,7 @@ databaseChangeLog:
                   value: "News_7"
               - column:
                   name: text
-                  value: "My text"
+                  value: "Quisque id diam vel quam elementum pulvinar etiam non quam"
         - insert:
             tableName: news
             columns:
@@ -74,7 +74,7 @@ databaseChangeLog:
                   value: "News_8"
               - column:
                   name: text
-                  value: "My text"
+                  value: "Amet volutpat consequat mauris nunc congue nisi. Sem viverra aliquet eget sit amet"
         - insert:
             tableName: news
             columns:
@@ -83,7 +83,7 @@ databaseChangeLog:
                   value: "News_9"
               - column:
                   name: text
-                  value: "My text"
+                  value: "Ultrices tincidunt arcu non sodales neque sodales ut etiam sit"
         - insert:
             tableName: news
             columns:
@@ -92,4 +92,94 @@ databaseChangeLog:
                   value: "News_10"
               - column:
                   name: text
+                  value: "Ut sem viverra aliquet eget sit amet tellus. Sed elementum tempus egestas sed sed risus pretium"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_11"
+              - column:
+                  name: text
+                  value: "Quam pellentesque nec nam aliquam sem et"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_12"
+              - column:
+                  name: text
+                  value: "Eu volutpat odio facilisis mauris sit amet"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_13"
+              - column:
+                  name: text
+                  value: "Dictum fusce ut placerat orci. Condimentum lacinia quis vel eros donec ac odio tempor"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_14"
+              - column:
+                  name: text
+                  value: "Quisque id diam vel quam elementum pulvinar etiam non"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_15"
+              - column:
+                  name: text
+                  value: "Mi sit amet mauris commodo quis"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_16"
+              - column:
+                  name: text
+                  value: "Velit scelerisque in dictum non consectetur a"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_17"
+              - column:
+                  name: text
                   value: "My text"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_18"
+              - column:
+                  name: text
+                  value: "Ullamcorper velit sed ullamcorper morbi"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_19"
+              - column:
+                  name: text
+                  value: "Elementum nibh tellus molestie nunc non blandit"
+        - insert:
+            tableName: news
+            columns:
+              - column:
+                  name: title
+                  value: "News_20"
+              - column:
+                  name: text
+                  value: "Elit ullamcorper dignissim cras tincidunt lobortis. Leo in vitae turpis massa sed"
