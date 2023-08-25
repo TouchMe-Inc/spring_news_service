@@ -10,6 +10,8 @@ public interface CommentService {
 
     Page<CommentDto> getPage(Pageable pageable);
 
+    Page<CommentDto> getPageByNewsId(Long newsId, Pageable pageable);
+
     CommentDto create(CommentDto comment);
 
     CommentDto updateById(Long id, CommentDto comment);

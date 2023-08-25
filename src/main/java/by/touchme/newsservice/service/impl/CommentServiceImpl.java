@@ -28,7 +28,16 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Page<CommentDto> getPage(Pageable pageable) {
-        return null; //return this.commentRepository.findAll(pageable);
+        Page<Comment> page = this.commentRepository.findAll(pageable);
+
+        return page.map(this.commentMapper::modelToDto);
+    }
+
+    @Override
+    public Page<CommentDto> getPageByNewsId(Long newsId, Pageable pageable) {
+        Page<Comment> page = this.commentRepository.findAllByNewsId(newsId, pageable);
+
+        return page.map(this.commentMapper::modelToDto);
     }
 
     @Override
