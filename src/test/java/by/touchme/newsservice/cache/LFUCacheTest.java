@@ -10,6 +10,13 @@ public class LFUCacheTest {
 
     @DisplayName("JUnit test for LFUCache")
     @Test
+    public void getCacheName() {
+        Cache cache = new LFUCache("test", 3);
+        Assertions.assertEquals("test", cache.getName());
+    }
+
+    @DisplayName("JUnit test for LFUCache")
+    @Test
     public void getNonExistingCache() {
         Cache cache = new LFUCache("test", 3);
         Assertions.assertNull(cache.get(ArgumentMatchers.anyString()));
