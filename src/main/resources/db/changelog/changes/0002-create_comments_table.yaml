@@ -30,3 +30,5 @@ databaseChangeLog:
               - column:
                   name: news_id
                   type: bigint
+                  constraints:
+                    nullable: false
