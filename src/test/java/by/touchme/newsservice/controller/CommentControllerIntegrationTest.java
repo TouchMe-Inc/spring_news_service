@@ -86,6 +86,7 @@ public class CommentControllerIntegrationTest {
     @Test
     public void create() throws Exception {
         CommentDto createComment = new CommentDto();
+        createComment.setNewsId(1L);
         createComment.setUsername("John Doe");
         createComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
@@ -105,6 +106,7 @@ public class CommentControllerIntegrationTest {
     @Test
     public void updateById() throws Exception {
         CommentDto updateComment = new CommentDto();
+        updateComment.setNewsId(1L);
         updateComment.setUsername("John Doe");
         updateComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 

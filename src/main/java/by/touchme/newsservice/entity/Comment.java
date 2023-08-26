@@ -45,6 +45,6 @@ public class Comment {
     /**
      * The identifier of the news the comment is associated with.
      */
-    @Column(name = "news_id")
-    private Long newsId; // TODO: OneToMany relation?
+    @Column(name = "news_id", nullable = false)
+    private Long newsId;
 }
