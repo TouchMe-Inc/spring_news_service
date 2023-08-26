@@ -32,7 +32,7 @@ public class CommentControllerIntegrationTest {
     private final String URL = "/v1/comment";
     private final String DOC_IDENTIFIER = "comment/{methodName}";
 
-    private final Long NOT_FOUND_ID = 0L;
+    private final Long NOT_FOUND_ID = 99999L;
     private final Long CORRECT_ID = 1L;
     private final Long DELETE_ID = 2L;
 
@@ -126,6 +126,7 @@ public class CommentControllerIntegrationTest {
     @Test
     public void updateByIdNotFound() throws Exception {
         CommentDto updateComment = new CommentDto();
+        updateComment.setNewsId(1L);
         updateComment.setUsername("John Doe");
         updateComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 

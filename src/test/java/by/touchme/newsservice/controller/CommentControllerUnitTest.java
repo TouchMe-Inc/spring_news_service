@@ -62,11 +62,12 @@ public class CommentControllerUnitTest {
     @Test
     public void create() throws Exception {
         CommentDto createComment = new CommentDto();
+        createComment.setNewsId(1L);
         createComment.setUsername("John Doe");
         createComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
         CommentDto createdComment = new CommentDto();
-        createdComment.setId(1L);
+        createdComment.setNewsId(1L);
         createComment.setUsername("John Snow");
         createComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
         createdComment.setTime(new Date());
@@ -87,11 +88,12 @@ public class CommentControllerUnitTest {
     @Test
     public void updateById() throws Exception {
         CommentDto updateComment = new CommentDto();
+        updateComment.setNewsId(1L);
         updateComment.setUsername("John Doe");
         updateComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
         CommentDto updatedComment = new CommentDto();
-        updatedComment.setId(1L);
+        updatedComment.setNewsId(1L);
         updatedComment.setUsername("John Doe");
         updatedComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
         updatedComment.setTime(new Date());
