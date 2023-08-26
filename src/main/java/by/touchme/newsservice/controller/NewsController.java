@@ -11,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
+/**
+ * CRUD controller for news.
+ */
 @RequestMapping("/v1/news")
 @RestController
 public class NewsController {

@@ -11,10 +11,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+/**
+ * Controller that catches all thrown exceptions.
+ */
 @RestControllerAdvice
 public class ErrorController {
     private static final Logger logger = LoggerFactory.getLogger(ErrorController.class);
 
+    /**
+     * The method expects a NotFound error and generates a response for the request.
+     *
+     * @param e NewsNotFoundException or CommentNotFoundException
+     * @return Object with error message
+     */
     @ExceptionHandler({NewsNotFoundException.class, CommentNotFoundException.class})
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)

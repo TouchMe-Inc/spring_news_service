@@ -7,6 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller for receiving news comments.
+ */
 @RequestMapping("/v1/news")
 @RestController
 public class NewsCommentController {

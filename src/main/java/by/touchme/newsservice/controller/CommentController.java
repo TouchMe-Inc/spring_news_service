@@ -10,6 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * CRUD controller for comments.
+ */
 @RequestMapping("/v1/comment")
 @RestController
 public class CommentController {
