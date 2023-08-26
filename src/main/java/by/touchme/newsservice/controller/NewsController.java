@@ -2,6 +2,7 @@ package by.touchme.newsservice.controller;
 
 import by.touchme.newsservice.dto.NewsDto;
 import by.touchme.newsservice.service.NewsService;
+import jakarta.validation.Valid;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -40,14 +41,14 @@ public class NewsController {
     @CachePut(cacheNames = "news", key = "#result.id")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public NewsDto create(@RequestBody NewsDto news) {
+    public NewsDto create(@Valid @RequestBody NewsDto news) {
         return this.newsService.create(news);
     }
 
     @CachePut(cacheNames = "news", key = "#id")
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public NewsDto updateById(@PathVariable(name = "id") Long id, @RequestBody NewsDto news) {
+    public NewsDto updateById(@PathVariable(name = "id") Long id, @Valid @RequestBody NewsDto news) {
         return this.newsService.updateById(id, news);
     }
 

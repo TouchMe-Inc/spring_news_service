@@ -2,6 +2,7 @@ package by.touchme.newsservice.controller;
 
 import by.touchme.newsservice.dto.CommentDto;
 import by.touchme.newsservice.service.CommentService;
+import jakarta.validation.Valid;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -39,14 +40,14 @@ public class CommentController {
     @CachePut(cacheNames = "comments", key = "#result.id")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CommentDto create(@RequestBody CommentDto comment) {
+    public CommentDto create(@Valid @RequestBody CommentDto comment) {
         return this.commentService.create(comment);
     }
 
     @CachePut(cacheNames = "comments", key = "#id")
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public CommentDto updateById(@PathVariable(name = "id") Long id, @RequestBody CommentDto comment) {
+    public CommentDto updateById(@PathVariable(name = "id") Long id, @Valid @RequestBody CommentDto comment) {
         return this.commentService.updateById(id, comment);
     }
 
