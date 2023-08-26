@@ -42,20 +42,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto create(CommentDto comment) {
-
-        Comment comment1 = this.commentRepository.save(
-                this.commentMapper.dtoToModel(comment)
+        return this.commentMapper.modelToDto(
+                this.commentRepository.save(
+                        this.commentMapper.dtoToModel(comment)
+                )
         );
-
-        System.out.println(comment1);
-
-        CommentDto dto = this.commentMapper.modelToDto(
-                comment1
-        );
-
-        System.out.println(dto);
-
-        return dto;
     }
 
     @Override
