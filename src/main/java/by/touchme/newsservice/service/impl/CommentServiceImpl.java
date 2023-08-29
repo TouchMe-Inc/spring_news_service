@@ -7,11 +7,13 @@ import by.touchme.newsservice.mapper.CommentMapper;
 import by.touchme.newsservice.repository.CommentRepository;
 import by.touchme.newsservice.service.CommentService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
+@Slf4j
 @Service
 public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
@@ -19,6 +21,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto getById(Long id) {
+        log.info("Get comment with id = {}", id);
         return this.commentMapper.modelToDto(
                 this.commentRepository
                         .findById(id)
@@ -28,6 +31,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Page<CommentDto> getPage(Pageable pageable) {
+        log.info("Get comment page ({})", pageable);
         Page<Comment> page = this.commentRepository.findAll(pageable);
 
         return page.map(this.commentMapper::modelToDto);
@@ -35,6 +39,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Page<CommentDto> getPageByNewsId(Long newsId, Pageable pageable) {
+        log.info("Get comment page ({}) with news_id = {}", pageable, newsId);
         Page<Comment> page = this.commentRepository.findAllByNewsId(newsId, pageable);
 
         return page.map(this.commentMapper::modelToDto);
@@ -42,6 +47,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto create(CommentDto comment) {
+        log.info("Create comment ({})", comment);
         return this.commentMapper.modelToDto(
                 this.commentRepository.save(
                         this.commentMapper.dtoToModel(comment)
@@ -57,6 +63,7 @@ public class CommentServiceImpl implements CommentService {
 
         comment.setId(id);
 
+        log.info("Update comment with id = {} ({})", id, comment);
         return this.commentMapper.modelToDto(
                 this.commentRepository.save(
                         this.commentMapper.dtoToModel(comment)
@@ -70,6 +77,7 @@ public class CommentServiceImpl implements CommentService {
             throw new CommentNotFoundException(id);
         }
 
+        log.info("Delete comment with id = {}", id);
         this.commentRepository.deleteById(id);
     }
 }

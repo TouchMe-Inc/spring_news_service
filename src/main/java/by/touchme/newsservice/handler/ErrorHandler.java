@@ -1,4 +1,4 @@
-package by.touchme.newsservice.controller;
+package by.touchme.newsservice.handler;
 
 import by.touchme.newsservice.exception.CommentNotFoundException;
 import by.touchme.newsservice.exception.NewsNotFoundException;
@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,8 +22,8 @@ import java.util.Map;
  * Controller that catches all thrown exceptions.
  */
 @RestControllerAdvice
-public class ErrorController {
-    private static final Logger logger = LoggerFactory.getLogger(ErrorController.class);
+public class ErrorHandler {
+    private static final Logger logger = LoggerFactory.getLogger(ErrorHandler.class);
 
     /**
      * The method expects a NotFound error and generates a response for the request.
@@ -32,8 +34,8 @@ public class ErrorController {
     @ExceptionHandler({NewsNotFoundException.class, CommentNotFoundException.class})
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorMessage notFoundException(Exception e) {
-        return new ErrorMessage(e.getMessage());
+    public ErrorMessage notFoundException(Exception e, WebRequest request) {
+        return new ErrorMessage(new Date(), e.getMessage(), request.getDescription(false));
     }
 
     /**
@@ -44,7 +46,7 @@ public class ErrorController {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorMessage argumentNotValidException(MethodArgumentNotValidException e) {
+    public ErrorMessage argumentNotValidException(MethodArgumentNotValidException e, WebRequest request) {
         Map<String, String> errors = new HashMap<>();
 
         e.getBindingResult().getAllErrors().forEach((error) ->{
@@ -54,14 +56,14 @@ public class ErrorController {
             errors.put(fieldName, message);
         });
 
-        return new ErrorMessage(errors.toString());
+        return new ErrorMessage(new Date(), errors.toString(), request.getDescription(false));
     }
 
     @ExceptionHandler({Exception.class})
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorMessage anyException(Exception e) {
+    public ErrorMessage anyException(Exception e, WebRequest request) {
         logger.error("Unexpected error", e);
-        return new ErrorMessage(e.getMessage());
+        return new ErrorMessage(new Date(), e.getMessage(), request.getDescription(false));
     }
 }

@@ -7,11 +7,13 @@ import by.touchme.newsservice.mapper.NewsMapper;
 import by.touchme.newsservice.repository.NewsRepository;
 import by.touchme.newsservice.service.NewsService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
+@Slf4j
 @Service
 public class NewsServiceImpl implements NewsService {
     private final NewsRepository newsRepository;
@@ -19,6 +21,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public NewsDto getById(Long id) {
+        log.info("Get news with id = {}", id);
         return this.newsMapper.modelToDto(
                 this.newsRepository
                         .findById(id)
@@ -28,6 +31,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public Page<NewsDto> getPage(Pageable pageable) {
+        log.info("Get news page ({})", pageable);
         Page<News> page = this.newsRepository.findAll(pageable);
 
         return page.map(this.newsMapper::modelToDto);
@@ -35,6 +39,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public NewsDto create(NewsDto news) {
+        log.info("Create news ({})", news);
         return this.newsMapper.modelToDto(
                 this.newsRepository.save(
                         this.newsMapper.dtoToModel(news)
@@ -50,6 +55,7 @@ public class NewsServiceImpl implements NewsService {
 
         news.setId(id);
 
+        log.info("Update news with id = {} ({})", id, news);
         return this.newsMapper.modelToDto(
                 this.newsRepository.save(
                         this.newsMapper.dtoToModel(news)
@@ -63,6 +69,7 @@ public class NewsServiceImpl implements NewsService {
             throw new NewsNotFoundException(id);
         }
 
+        log.info("Delete news with id = {}", id);
         this.newsRepository.deleteById(id);
     }
 }
