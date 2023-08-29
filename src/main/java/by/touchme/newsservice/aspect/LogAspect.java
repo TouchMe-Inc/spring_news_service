@@ -42,9 +42,11 @@ public class LogAspect {
         Map<String, Object> parameters = new HashMap<>();
         String[] parameterNames = ((CodeSignature) joinPoint.getSignature()).getParameterNames();
         Object[] parameterValues = joinPoint.getArgs();
+
         for (int i = 0; i < parameterNames.length && i < parameterValues.length; i++) {
             parameters.put(parameterNames[i], parameterValues[i]);
         }
+
         return parameters;
     }
 }
