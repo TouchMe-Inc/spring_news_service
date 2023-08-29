@@ -48,6 +48,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
+    runtimeOnly 'io.grpc:grpc-netty-shaded:1.57.2'
+    implementation 'io.grpc:grpc-protobuf:1.57.2'
+    implementation 'io.grpc:grpc-stub:1.57.2'
 }
 
 test {
@@ -60,8 +63,8 @@ asciidoctor {
 
     baseDirFollowsSourceFile()
 
-    attributes \
-            'sourcedir': snippetsDir,
+    attributes  \
+             'sourcedir': snippetsDir,
             'endpoint-url': 'http://localhost',
             'toc': 'left',
             'icons': 'font',
@@ -73,20 +76,20 @@ asciidoctor {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:3.0.0"
+        artifact = "com.google.protobuf:protoc:3.22.3"
     }
     plugins {
-        lite {
-            artifact = "com.google.protobuf:protoc-gen-javalite:3.0.0"
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.57.2'
         }
     }
     generateProtoTasks {
         all().each { task ->
             task.builtins {
-                remove java
+                java { option 'lite' }
             }
             task.plugins {
-                lite { }
+                grpc { option 'lite' }
             }
         }
     }
