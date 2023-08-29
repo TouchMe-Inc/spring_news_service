@@ -1,4 +1,6 @@
 package by.touchme.newsservice.record;
 
-public record ErrorMessage(String message) {
+import java.util.Date;
+
+public record ErrorMessage(Date timestamp, String message, String details) {
 }
