@@ -1,16 +1,22 @@
 package by.touchme.newsservice.service.impl;
 
+import by.touchme.newsservice.criteria.SearchCriteria;
 import by.touchme.newsservice.dto.NewsDto;
+import by.touchme.newsservice.dto.SearchDto;
 import by.touchme.newsservice.entity.News;
 import by.touchme.newsservice.exception.NewsNotFoundException;
 import by.touchme.newsservice.mapper.NewsMapper;
 import by.touchme.newsservice.repository.NewsRepository;
 import by.touchme.newsservice.service.NewsService;
+import by.touchme.newsservice.specification.NewsSpecification;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Slf4j
@@ -27,6 +33,27 @@ public class NewsServiceImpl implements NewsService {
                         .findById(id)
                         .orElseThrow(() -> new NewsNotFoundException(id))
         );
+    }
+
+    @Override
+    public Page<NewsDto> getPageByCriteria(SearchDto search, Pageable pageable) {
+        log.info("Get news page ({}) by criteria {}", pageable, search);
+
+        List<SearchCriteria> criteriaList = search.getCriteriaList();
+
+        Specification<News> specification = null;
+
+        if (!criteriaList.isEmpty()) {
+            specification = new NewsSpecification(criteriaList.get(0));
+            for (int idx = 1; idx < criteriaList.size(); idx++) {
+                SearchCriteria criteria = criteriaList.get(idx);
+                specification = Specification.where(specification).and(new NewsSpecification(criteria));
+            }
+        }
+
+        Page<News> page = this.newsRepository.findAll(specification, pageable);
+
+        return page.map(this.newsMapper::modelToDto);
     }
 
     @Override

@@ -1,12 +1,16 @@
 package by.touchme.newsservice.service;
 
 import by.touchme.newsservice.dto.NewsDto;
+import by.touchme.newsservice.dto.SearchDto;
 import by.touchme.newsservice.entity.News;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 public interface NewsService {
     NewsDto getById(Long id);
+
+    Page<NewsDto> getPageByCriteria(SearchDto search, Pageable pageable);
 
     Page<NewsDto> getPage(Pageable pageable);
 
