@@ -9,7 +9,7 @@ import by.touchme.newsservice.mapper.NewsMapper;
 import by.touchme.newsservice.repository.NewsRepository;
 import by.touchme.newsservice.service.NewsService;
 import by.touchme.newsservice.specification.NewsSpecification;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 @Service
 public class NewsServiceImpl implements NewsService {

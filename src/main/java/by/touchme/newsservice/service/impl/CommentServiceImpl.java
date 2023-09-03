@@ -6,13 +6,13 @@ import by.touchme.newsservice.exception.CommentNotFoundException;
 import by.touchme.newsservice.mapper.CommentMapper;
 import by.touchme.newsservice.repository.CommentRepository;
 import by.touchme.newsservice.service.CommentService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 @Service
 public class CommentServiceImpl implements CommentService {

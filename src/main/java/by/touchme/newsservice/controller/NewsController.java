@@ -3,6 +3,7 @@ package by.touchme.newsservice.controller;
 import by.touchme.newsservice.dto.NewsDto;
 import by.touchme.newsservice.service.NewsService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -16,14 +17,11 @@ import org.springframework.web.bind.annotation.*;
  * CRUD controller for news.
  */
 @RequestMapping("/v1/news")
+@RequiredArgsConstructor
 @RestController
 public class NewsController {
 
     private final NewsService newsService;
-
-    NewsController(NewsService newsService) {
-        this.newsService = newsService;
-    }
 
     @Cacheable(cacheNames = "news", key = "#id")
     @GetMapping("/{id}")

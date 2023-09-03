@@ -3,6 +3,7 @@ package by.touchme.newsservice.controller;
 import by.touchme.newsservice.dto.CommentDto;
 import by.touchme.newsservice.service.CommentService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -15,14 +16,11 @@ import org.springframework.web.bind.annotation.*;
  * CRUD controller for comments.
  */
 @RequestMapping("/v1/comment")
+@RequiredArgsConstructor
 @RestController
 public class CommentController {
 
     private final CommentService commentService;
-
-    CommentController(CommentService commentService) {
-        this.commentService = commentService;
-    }
 
     @Cacheable(cacheNames = "comments", key = "#id")
     @GetMapping("/{id}")
