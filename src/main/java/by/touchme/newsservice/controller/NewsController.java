@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -25,9 +26,8 @@ public class NewsController {
 
     @Cacheable(cacheNames = "news", key = "#id")
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public NewsDto getById(@PathVariable(name = "id") Long id) {
-        return newsService.getById(id);
+    public ResponseEntity<NewsDto> getById(@PathVariable(name = "id") Long id) {
+        return new ResponseEntity<>(newsService.getById(id), HttpStatus.OK);
     }
 
     @GetMapping
@@ -36,24 +36,23 @@ public class NewsController {
         return newsService.getPage(pageable);
     }
 
-    @CachePut(cacheNames = "news", key = "#result.id")
+    @CachePut(cacheNames = "news", key = "#result.body.id")
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public NewsDto create(@Valid @RequestBody NewsDto news) {
-        return newsService.create(news);
+    public ResponseEntity<NewsDto> create(@Valid @RequestBody NewsDto news) {
+        return new ResponseEntity<>(newsService.create(news), HttpStatus.CREATED);
     }
 
     @CachePut(cacheNames = "news", key = "#id")
     @PutMapping(value = "/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public NewsDto updateById(@PathVariable(name = "id") Long id, @Valid @RequestBody NewsDto news) {
-        return newsService.updateById(id, news);
+    public ResponseEntity<NewsDto> updateById(@PathVariable(name = "id") Long id, @Valid @RequestBody NewsDto news) {
+        return new ResponseEntity<>(newsService.updateById(id, news), HttpStatus.NO_CONTENT);
     }
 
     @CacheEvict(cacheNames = "news", key = "#id")
     @DeleteMapping(value = "/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
         newsService.deleteById(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
