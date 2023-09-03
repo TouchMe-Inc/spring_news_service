@@ -1,13 +1,13 @@
 package by.touchme.newsservice.controller;
 
 import by.touchme.newsservice.dto.NewsDto;
+import by.touchme.newsservice.dto.PageDto;
 import by.touchme.newsservice.service.NewsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +31,8 @@ public class NewsController {
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public Page<NewsDto> getPage(Pageable pageable) {
-        return newsService.getPage(pageable);
+    public ResponseEntity<PageDto<NewsDto>> getPage(Pageable pageable) {
+        return new ResponseEntity<>(newsService.getPage(pageable), HttpStatus.OK);
     }
 
     @CachePut(cacheNames = "news", key = "#result.body.id")
