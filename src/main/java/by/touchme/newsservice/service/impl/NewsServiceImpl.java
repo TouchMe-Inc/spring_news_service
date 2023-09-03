@@ -1,7 +1,9 @@
 package by.touchme.newsservice.service.impl;
 
 import by.touchme.newsservice.criteria.SearchCriteria;
+import by.touchme.newsservice.dto.CommentDto;
 import by.touchme.newsservice.dto.NewsDto;
+import by.touchme.newsservice.dto.PageDto;
 import by.touchme.newsservice.dto.SearchDto;
 import by.touchme.newsservice.entity.News;
 import by.touchme.newsservice.exception.NewsNotFoundException;
@@ -36,7 +38,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public Page<NewsDto> getPageByCriteria(SearchDto search, Pageable pageable) {
+    public PageDto<NewsDto> getPageByCriteria(SearchDto search, Pageable pageable) {
         log.info("Get news page ({}) by criteria {}", pageable, search);
 
         List<SearchCriteria> criteriaList = search.getCriteriaList();
@@ -53,15 +55,21 @@ public class NewsServiceImpl implements NewsService {
 
         Page<News> page = newsRepository.findAll(specification, pageable);
 
-        return page.map(newsMapper::modelToDto);
+        PageDto<NewsDto> pageDto = new PageDto<>();
+        pageDto.setContent(newsMapper.toListDto(page.getContent()));
+
+        return pageDto;
     }
 
     @Override
-    public Page<NewsDto> getPage(Pageable pageable) {
+    public PageDto<NewsDto> getPage(Pageable pageable) {
         log.info("Get news page ({})", pageable);
         Page<News> page = newsRepository.findAll(pageable);
 
-        return page.map(newsMapper::modelToDto);
+        PageDto<NewsDto> pageDto = new PageDto<>();
+        pageDto.setContent(newsMapper.toListDto(page.getContent()));
+
+        return pageDto;
     }
 
     @Override
