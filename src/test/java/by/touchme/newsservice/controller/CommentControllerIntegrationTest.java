@@ -20,7 +20,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CommentControllerIntegrationTest {
 
     @Autowired
