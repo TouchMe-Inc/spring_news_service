@@ -1,13 +1,13 @@
 package by.touchme.newsservice.controller;
 
 import by.touchme.newsservice.dto.CommentDto;
+import by.touchme.newsservice.dto.PageDto;
 import by.touchme.newsservice.service.CommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,20 +30,20 @@ public class CommentController {
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public Page<CommentDto> getPage(Pageable pageable) {
-        return commentService.getPage(pageable);
+    public ResponseEntity<PageDto<CommentDto>> getPage(Pageable pageable) {
+        return new ResponseEntity<>(commentService.getPage(pageable), HttpStatus.OK);
     }
 
     @CachePut(cacheNames = "comments", key = "#result.body.id")
     @PostMapping
     public ResponseEntity<CommentDto> create(@Valid @RequestBody CommentDto comment) {
-         return new ResponseEntity<>(commentService.create(comment), HttpStatus.CREATED);
+        return new ResponseEntity<>(commentService.create(comment), HttpStatus.CREATED);
     }
 
     @CachePut(cacheNames = "comments", key = "#id")
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CommentDto> updateById(@PathVariable(name = "id") Long id, @Valid @RequestBody CommentDto comment) {
+    public ResponseEntity<CommentDto> updateById(
+            @PathVariable(name = "id") Long id, @Valid @RequestBody CommentDto comment) {
         return new ResponseEntity<>(commentService.updateById(id, comment), HttpStatus.NO_CONTENT);
     }
 
