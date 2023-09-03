@@ -28,8 +28,8 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public NewsDto getById(Long id) {
         log.info("Get news with id = {}", id);
-        return this.newsMapper.modelToDto(
-                this.newsRepository
+        return newsMapper.modelToDto(
+                newsRepository
                         .findById(id)
                         .orElseThrow(() -> new NewsNotFoundException(id))
         );
@@ -51,52 +51,52 @@ public class NewsServiceImpl implements NewsService {
             }
         }
 
-        Page<News> page = this.newsRepository.findAll(specification, pageable);
+        Page<News> page = newsRepository.findAll(specification, pageable);
 
-        return page.map(this.newsMapper::modelToDto);
+        return page.map(newsMapper::modelToDto);
     }
 
     @Override
     public Page<NewsDto> getPage(Pageable pageable) {
         log.info("Get news page ({})", pageable);
-        Page<News> page = this.newsRepository.findAll(pageable);
+        Page<News> page = newsRepository.findAll(pageable);
 
-        return page.map(this.newsMapper::modelToDto);
+        return page.map(newsMapper::modelToDto);
     }
 
     @Override
     public NewsDto create(NewsDto news) {
         log.info("Create news ({})", news);
-        return this.newsMapper.modelToDto(
-                this.newsRepository.save(
-                        this.newsMapper.dtoToModel(news)
+        return newsMapper.modelToDto(
+                newsRepository.save(
+                        newsMapper.dtoToModel(news)
                 )
         );
     }
 
     @Override
     public NewsDto updateById(Long id, NewsDto news) {
-        if (!this.newsRepository.existsById(id)) {
+        if (!newsRepository.existsById(id)) {
             throw new NewsNotFoundException(id);
         }
 
         news.setId(id);
 
         log.info("Update news with id = {} ({})", id, news);
-        return this.newsMapper.modelToDto(
-                this.newsRepository.save(
-                        this.newsMapper.dtoToModel(news)
+        return newsMapper.modelToDto(
+                newsRepository.save(
+                        newsMapper.dtoToModel(news)
                 )
         );
     }
 
     @Override
     public void deleteById(Long id) {
-        if (!this.newsRepository.existsById(id)) {
+        if (!newsRepository.existsById(id)) {
             throw new NewsNotFoundException(id);
         }
 
         log.info("Delete news with id = {}", id);
-        this.newsRepository.deleteById(id);
+        newsRepository.deleteById(id);
     }
 }

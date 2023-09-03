@@ -37,10 +37,9 @@ public class CommentControllerIntegrationTest {
     private final Long DELETE_ID = 2L;
 
     @DisplayName("Integration test for CommentController.getPage")
-    @Order(1)
     @Test
     public void getPage() throws Exception {
-        this.mockMvc.perform(
+        mockMvc.perform(
                         get(URL)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -52,10 +51,9 @@ public class CommentControllerIntegrationTest {
 
 
     @DisplayName("Integration test for CommentController.getById")
-    @Order(2)
     @Test
     public void getById() throws Exception {
-        this.mockMvc
+        mockMvc
                 .perform(
                         get(URL + "/{id}", CORRECT_ID)
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -67,10 +65,9 @@ public class CommentControllerIntegrationTest {
     }
 
     @DisplayName("Integration test for CommentController.getById")
-    @Order(3)
     @Test
     public void getByIdNotFound() throws Exception {
-        this.mockMvc
+        mockMvc
                 .perform(
                         get(URL + "/{id}", NOT_FOUND_ID)
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -82,7 +79,6 @@ public class CommentControllerIntegrationTest {
     }
 
     @DisplayName("Integration test for CommentController.create")
-    @Order(4)
     @Test
     public void create() throws Exception {
         CommentDto createComment = new CommentDto();
@@ -90,7 +86,7 @@ public class CommentControllerIntegrationTest {
         createComment.setUsername("John Doe");
         createComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
-        this.mockMvc.perform(
+        mockMvc.perform(
                         post(URL)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -102,7 +98,6 @@ public class CommentControllerIntegrationTest {
     }
 
     @DisplayName("Integration test for CommentController.updateById")
-    @Order(5)
     @Test
     public void updateById() throws Exception {
         CommentDto updateComment = new CommentDto();
@@ -110,7 +105,7 @@ public class CommentControllerIntegrationTest {
         updateComment.setUsername("John Doe");
         updateComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
-        this.mockMvc.perform(
+        mockMvc.perform(
                         put(URL + "/{id}", CORRECT_ID)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -122,7 +117,6 @@ public class CommentControllerIntegrationTest {
     }
 
     @DisplayName("Integration test for CommentController.updateById")
-    @Order(6)
     @Test
     public void updateByIdNotFound() throws Exception {
         CommentDto updateComment = new CommentDto();
@@ -130,7 +124,7 @@ public class CommentControllerIntegrationTest {
         updateComment.setUsername("John Doe");
         updateComment.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
-        this.mockMvc.perform(
+        mockMvc.perform(
                         put(URL + "/{id}", NOT_FOUND_ID)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -142,10 +136,9 @@ public class CommentControllerIntegrationTest {
     }
 
     @DisplayName("Integration test for CommentController.deleteById")
-    @Order(7)
     @Test
     public void deleteById() throws Exception {
-        this.mockMvc
+        mockMvc
                 .perform(
                         delete(URL + "/{id}", DELETE_ID)
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -157,10 +150,9 @@ public class CommentControllerIntegrationTest {
     }
 
     @DisplayName("Integration test for CommentController.deleteById")
-    @Order(8)
     @Test
     public void deleteByIdNotFound() throws Exception {
-        this.mockMvc
+        mockMvc
                 .perform(
                         delete(URL + "/{id}", NOT_FOUND_ID)
                                 .contentType(MediaType.APPLICATION_JSON)

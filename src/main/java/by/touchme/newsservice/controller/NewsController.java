@@ -29,33 +29,33 @@ public class NewsController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public NewsDto getById(@PathVariable(name = "id") Long id) {
-        return this.newsService.getById(id);
+        return newsService.getById(id);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Page<NewsDto> getPage(Pageable pageable) {
-        return this.newsService.getPage(pageable);
+        return newsService.getPage(pageable);
     }
 
     @CachePut(cacheNames = "news", key = "#result.id")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public NewsDto create(@Valid @RequestBody NewsDto news) {
-        return this.newsService.create(news);
+        return newsService.create(news);
     }
 
     @CachePut(cacheNames = "news", key = "#id")
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public NewsDto updateById(@PathVariable(name = "id") Long id, @Valid @RequestBody NewsDto news) {
-        return this.newsService.updateById(id, news);
+        return newsService.updateById(id, news);
     }
 
     @CacheEvict(cacheNames = "news", key = "#id")
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable(name = "id") Long id) {
-        this.newsService.deleteById(id);
+        newsService.deleteById(id);
     }
 }

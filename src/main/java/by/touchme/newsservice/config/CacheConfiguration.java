@@ -46,7 +46,7 @@ public class CacheConfiguration {
 
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory factory) {
-        CacheTypes cacheTypes = this.properties.getType();
+        CacheTypes cacheTypes = properties.getType();
 
         switch (cacheTypes) {
             case LRU, LFU -> {
@@ -63,11 +63,13 @@ public class CacheConfiguration {
             }
             case REDIS -> {
                 RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
+
                 RedisCacheConfiguration redisCacheConfiguration = config
                         .serializeKeysWith(
                                 RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                         .serializeValuesWith(RedisSerializationContext.SerializationPair
                                 .fromSerializer(new GenericJackson2JsonRedisSerializer()));
+
                 return RedisCacheManager.builder(factory).cacheDefaults(redisCacheConfiguration).build();
             }
             default -> {

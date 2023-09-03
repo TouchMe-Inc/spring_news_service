@@ -36,7 +36,8 @@ public class NewsControllerUnitTest {
     @DisplayName("JUnit test for NewsController.getPage")
     @Test
     public void getPage() throws Exception {
-        this.mockMvc.perform(
+        mockMvc
+                .perform(
                         get("/v1/news")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -56,7 +57,7 @@ public class NewsControllerUnitTest {
 
         when(newsService.getById(any())).thenReturn(firstNews);
 
-        this.mockMvc
+        mockMvc
                 .perform(
                         get("/v1/news/{id}", 1L)
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -81,7 +82,7 @@ public class NewsControllerUnitTest {
 
         when(newsService.create(createNews)).thenReturn(createdNews);
 
-        this.mockMvc.perform(
+        mockMvc.perform(
                         post("/v1/news")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -106,7 +107,8 @@ public class NewsControllerUnitTest {
 
         when(newsService.updateById(any(), any())).thenReturn(updatedNews);
 
-        this.mockMvc.perform(
+        mockMvc
+                .perform(
                         put("/v1/news/{id}", 1L)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -119,7 +121,7 @@ public class NewsControllerUnitTest {
     @DisplayName("JUnit test for NewsController.deleteById")
     @Test
     public void deleteById() throws Exception {
-        this.mockMvc
+        mockMvc
                 .perform(
                         delete("/v1/news/{id}", 1L)
                                 .contentType(MediaType.APPLICATION_JSON)

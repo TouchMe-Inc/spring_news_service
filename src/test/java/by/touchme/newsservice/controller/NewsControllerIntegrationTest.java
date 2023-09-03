@@ -37,10 +37,9 @@ public class NewsControllerIntegrationTest {
     private final Long DELETE_ID = 2L;
 
     @DisplayName("Integration test for NewsController.getPage")
-    @Order(1)
     @Test
     public void getPage() throws Exception {
-        this.mockMvc.perform(
+        mockMvc.perform(
                         get(URL)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -52,7 +51,6 @@ public class NewsControllerIntegrationTest {
 
 
     @DisplayName("Integration test for NewsController.getById")
-    @Order(2)
     @Test
     public void getById() throws Exception {
         this.mockMvc
@@ -67,7 +65,6 @@ public class NewsControllerIntegrationTest {
     }
 
     @DisplayName("Integration test for NewsController.getById")
-    @Order(3)
     @Test
     public void getByIdNotFound() throws Exception {
         this.mockMvc
@@ -82,14 +79,13 @@ public class NewsControllerIntegrationTest {
     }
 
     @DisplayName("Integration test for NewsController.create")
-    @Order(4)
     @Test
     public void create() throws Exception {
         NewsDto createNews = new NewsDto();
         createNews.setTitle("Lorem Ipsum");
         createNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
-        this.mockMvc.perform(
+        mockMvc.perform(
                         post(URL)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -101,14 +97,13 @@ public class NewsControllerIntegrationTest {
     }
 
     @DisplayName("Integration test for NewsController.updateById")
-    @Order(5)
     @Test
     public void updateById() throws Exception {
         NewsDto updateNews = new NewsDto();
         updateNews.setTitle("Lorem Ipsum");
         updateNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
-        this.mockMvc.perform(
+        mockMvc.perform(
                         put(URL + "/{id}", CORRECT_ID)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -120,14 +115,13 @@ public class NewsControllerIntegrationTest {
     }
 
     @DisplayName("Integration test for NewsController.updateById")
-    @Order(6)
     @Test
     public void updateByIdNotFound() throws Exception {
         NewsDto updateNews = new NewsDto();
         updateNews.setTitle("Lorem Ipsum");
         updateNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
-        this.mockMvc.perform(
+        mockMvc.perform(
                         put(URL + "/{id}", NOT_FOUND_ID)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -139,7 +133,6 @@ public class NewsControllerIntegrationTest {
     }
 
     @DisplayName("Integration test for NewsController.deleteById")
-    @Order(7)
     @Test
     public void deleteById() throws Exception {
         this.mockMvc
@@ -154,7 +147,6 @@ public class NewsControllerIntegrationTest {
     }
 
     @DisplayName("Integration test for NewsController.deleteById")
-    @Order(8)
     @Test
     public void deleteByIdNotFound() throws Exception {
         this.mockMvc

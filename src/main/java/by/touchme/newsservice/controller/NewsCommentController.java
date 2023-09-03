@@ -23,6 +23,6 @@ public class NewsCommentController {
     @GetMapping("/{id}/comment")
     @ResponseStatus(HttpStatus.OK)
     public Page<CommentDto> getPage(@PathVariable(name = "id") Long newsId, Pageable pageable) {
-        return this.commentService.getPageByNewsId(newsId, pageable);
+        return commentService.getPageByNewsId(newsId, pageable);
     }
 }

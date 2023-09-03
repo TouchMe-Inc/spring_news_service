@@ -28,7 +28,7 @@ public class CommentController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CommentDto getById(@PathVariable(name = "id") Long id) {
-        return this.commentService.getById(id);
+        return commentService.getById(id);
     }
 
     @GetMapping
@@ -41,20 +41,20 @@ public class CommentController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CommentDto create(@Valid @RequestBody CommentDto comment) {
-        return this.commentService.create(comment);
+        return commentService.create(comment);
     }
 
     @CachePut(cacheNames = "comments", key = "#id")
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public CommentDto updateById(@PathVariable(name = "id") Long id, @Valid @RequestBody CommentDto comment) {
-        return this.commentService.updateById(id, comment);
+        return commentService.updateById(id, comment);
     }
 
     @CacheEvict(cacheNames = "comments", key = "#id")
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteById(@PathVariable(name = "id") Long id) {
-        this.commentService.deleteById(id);
+        commentService.deleteById(id);
     }
 }

@@ -25,7 +25,7 @@ public class LFUCache implements Cache {
 
     @Override
     public String getName() {
-        return this.cacheName;
+        return cacheName;
     }
 
     @Override
@@ -35,16 +35,16 @@ public class LFUCache implements Cache {
 
     @Override
     public ValueWrapper get(Object key) {
-        this.lock.readLock().lock();
+        lock.readLock().lock();
 
         try {
-            if (!this.data.containsKey(key)) {
+            if (!data.containsKey(key)) {
                 return null;
             }
 
-            this.frequency.put(key, this.frequency.get(key) + 1);
+            frequency.put(key, frequency.get(key) + 1);
 
-            return new SimpleValueWrapper(this.data.get(key));
+            return new SimpleValueWrapper(data.get(key));
         } finally {
             this.lock.readLock().unlock();
         }
@@ -62,44 +62,44 @@ public class LFUCache implements Cache {
 
     @Override
     public void put(Object key, Object value) {
-        this.lock.writeLock().lock();
+        lock.writeLock().lock();
 
         try {
-            int frequency = 1;
+            int freq = 1;
 
             if (this.data.containsKey(key)) {
-                frequency += this.frequency.get(key);
-            } else if (this.data.size() >= this.capacity) {
+                freq += frequency.get(key);
+            } else if (data.size() >= capacity) {
                 // Add Tree for O(1) and order for remove only old record
                 Map.Entry<Object, Integer> removedEntry = Collections.min(
-                        this.frequency.entrySet(),
+                        frequency.entrySet(),
                         Map.Entry.comparingByValue()
                 );
-                this.evict(removedEntry.getKey());
+                evict(removedEntry.getKey());
             }
 
-            this.data.put(key, value);
-            this.frequency.put(key, frequency);
+            data.put(key, value);
+            frequency.put(key, freq);
         } finally {
-            this.lock.writeLock().unlock();
+            lock.writeLock().unlock();
         }
     }
 
     @Override
     public void evict(Object key) {
-        this.data.remove(key);
-        this.frequency.remove(key);
+        data.remove(key);
+        frequency.remove(key);
     }
 
     @Override
     public void clear() {
-        this.lock.writeLock().lock();
+        lock.writeLock().lock();
 
         try {
-            this.data.clear();
-            this.frequency.clear();
+            data.clear();
+            frequency.clear();
         } finally {
-            this.lock.writeLock().unlock();
+            lock.writeLock().unlock();
         }
     }
 }

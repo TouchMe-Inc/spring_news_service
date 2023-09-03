@@ -22,6 +22,6 @@ public class SearchNewsController {
     @GetMapping("/search")
     @ResponseStatus(HttpStatus.OK)
     public Page<NewsDto> getPage(@Valid @RequestBody SearchDto searchDto, Pageable pageable) {
-        return this.newsService.getPageByCriteria(searchDto, pageable);
+        return newsService.getPageByCriteria(searchDto, pageable);
     }
 }

@@ -36,7 +36,7 @@ public class CommentControllerUnitTest {
     @DisplayName("JUnit test for CommentController.getPage")
     @Test
     public void getPage() throws Exception {
-        this.mockMvc.perform(
+        mockMvc.perform(
                         get("/v1/comment")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -74,7 +74,7 @@ public class CommentControllerUnitTest {
 
         when(commentService.create(createComment)).thenReturn(createdComment);
 
-        this.mockMvc.perform(
+        mockMvc.perform(
                         post("/v1/comment")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -100,7 +100,7 @@ public class CommentControllerUnitTest {
 
         when(commentService.updateById(any(), any())).thenReturn(updatedComment);
 
-        this.mockMvc.perform(
+        mockMvc.perform(
                         put("/v1/comment/{id}", 1L)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
