@@ -1,6 +1,7 @@
 package by.touchme.newsservice.service.impl;
 
 import by.touchme.newsservice.dto.CommentDto;
+import by.touchme.newsservice.dto.PageDto;
 import by.touchme.newsservice.entity.Comment;
 import by.touchme.newsservice.exception.CommentNotFoundException;
 import by.touchme.newsservice.mapper.CommentMapper;
@@ -30,19 +31,25 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Page<CommentDto> getPage(Pageable pageable) {
+    public PageDto<CommentDto> getPage(Pageable pageable) {
         log.info("Get comment page ({})", pageable);
         Page<Comment> page = commentRepository.findAll(pageable);
 
-        return page.map(commentMapper::modelToDto);
+        PageDto<CommentDto> pageDto = new PageDto<>();
+        pageDto.setContent(commentMapper.toListDto(page.getContent()));
+
+        return pageDto;
     }
 
     @Override
-    public Page<CommentDto> getPageByNewsId(Long newsId, Pageable pageable) {
+    public PageDto<CommentDto> getPageByNewsId(Long newsId, Pageable pageable) {
         log.info("Get comment page ({}) with news_id = {}", pageable, newsId);
         Page<Comment> page = commentRepository.findAllByNewsId(newsId, pageable);
 
-        return page.map(commentMapper::modelToDto);
+        PageDto<CommentDto> pageDto = new PageDto<>();
+        pageDto.setContent(commentMapper.toListDto(page.getContent()));
+
+        return pageDto;
     }
 
     @Override
