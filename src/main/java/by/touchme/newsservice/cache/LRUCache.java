@@ -26,7 +26,7 @@ public class LRUCache implements Cache {
 
     @Override
     public String getName() {
-        return this.cacheName;
+        return cacheName;
     }
 
     @Override
@@ -36,19 +36,19 @@ public class LRUCache implements Cache {
 
     @Override
     public ValueWrapper get(Object key) {
-        this.lock.readLock().lock();
+        lock.readLock().lock();
 
         try {
-            if (!this.data.containsKey(key)) {
+            if (!data.containsKey(key)) {
                 return null;
             }
 
-            this.order.remove(key);
-            this.order.addFirst(key);
+            order.remove(key);
+            order.addFirst(key);
 
-            return new SimpleValueWrapper(this.data.get(key));
+            return new SimpleValueWrapper(data.get(key));
         } finally {
-            this.lock.readLock().unlock();
+            lock.readLock().unlock();
         }
     }
 
@@ -64,38 +64,38 @@ public class LRUCache implements Cache {
 
     @Override
     public void put(Object key, Object value) {
-        this.lock.writeLock().lock();
+        lock.writeLock().lock();
 
         try {
-            if (this.data.containsKey(key)) {
-                this.order.remove(key);
-            } else if (this.data.size() >= this.capacity) {
-                Object keyRemoved = this.order.removeLast();
-                this.evict(keyRemoved);
+            if (data.containsKey(key)) {
+                order.remove(key);
+            } else if (data.size() >= capacity) {
+                Object keyRemoved = order.removeLast();
+                evict(keyRemoved);
             }
 
-            this.data.put(key, value);
-            this.order.addFirst(key);
+            data.put(key, value);
+            order.addFirst(key);
         } finally {
-            this.lock.writeLock().unlock();
+            lock.writeLock().unlock();
         }
     }
 
     @Override
     public void evict(Object key) {
-        this.data.remove(key);
-        this.order.remove(key);
+        data.remove(key);
+        order.remove(key);
     }
 
     @Override
     public void clear() {
-        this.lock.writeLock().lock();
+        lock.writeLock().lock();
 
         try {
-            this.data.clear();
-            this.order.clear();
+            data.clear();
+            order.clear();
         } finally {
-            this.lock.writeLock().unlock();
+            lock.writeLock().unlock();
         }
     }
 }

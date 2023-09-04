@@ -21,7 +21,7 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.io.Serializable;
-import java.util.Arrays;
+import java.util.Collections;
 
 
 @EnableConfigurationProperties(CacheProperties.class)
@@ -46,28 +46,27 @@ public class CacheConfiguration {
 
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory factory) {
-        CacheTypes cacheTypes = this.properties.getType();
+        CacheTypes cacheTypes = properties.getType();
 
         switch (cacheTypes) {
             case LRU, LFU -> {
                 SimpleCacheManager cacheManager = new SimpleCacheManager();
                 
                 cacheManager.setCaches(
-                        Arrays.asList(
-                                createCache("news"),
-                                createCache("comments")
-                        )
+                        Collections.singletonList(createCache())
                 );
 
                 return cacheManager;
             }
             case REDIS -> {
                 RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
+
                 RedisCacheConfiguration redisCacheConfiguration = config
                         .serializeKeysWith(
                                 RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                         .serializeValuesWith(RedisSerializationContext.SerializationPair
                                 .fromSerializer(new GenericJackson2JsonRedisSerializer()));
+
                 return RedisCacheManager.builder(factory).cacheDefaults(redisCacheConfiguration).build();
             }
             default -> {
@@ -76,13 +75,13 @@ public class CacheConfiguration {
         }
     }
 
-    private Cache createCache(String name) {
+    private Cache createCache() {
         int capacity = this.properties.getCapacity();
         CacheTypes cacheTypes = this.properties.getType();
 
         return switch (cacheTypes) {
-            case LRU -> new LRUCache(name, capacity);
-            case LFU -> new LFUCache(name, capacity);
+            case LRU -> new LRUCache("news", capacity);
+            case LFU -> new LFUCache("news", capacity);
             default -> null;
         };
     }

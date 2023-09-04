@@ -14,4 +14,4 @@ spring:
 
 cache:
   capacity: 10
-  type: lru
+  type: none
