@@ -35,10 +35,7 @@ public class CommentServiceImpl implements CommentService {
         log.info("Get comment page ({})", pageable);
         Page<Comment> page = commentRepository.findAll(pageable);
 
-        PageDto<CommentDto> pageDto = new PageDto<>();
-        pageDto.setContent(commentMapper.toListDto(page.getContent()));
-
-        return pageDto;
+        return new PageDto<>(page.map(commentMapper::modelToDto));
     }
 
     @Override
@@ -46,10 +43,7 @@ public class CommentServiceImpl implements CommentService {
         log.info("Get comment page ({}) with news_id = {}", pageable, newsId);
         Page<Comment> page = commentRepository.findAllByNewsId(newsId, pageable);
 
-        PageDto<CommentDto> pageDto = new PageDto<>();
-        pageDto.setContent(commentMapper.toListDto(page.getContent()));
-
-        return pageDto;
+        return new PageDto<>(page.map(commentMapper::modelToDto));
     }
 
     @Override

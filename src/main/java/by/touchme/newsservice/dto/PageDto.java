@@ -1,12 +1,27 @@
 package by.touchme.newsservice.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 @Data
-@RequiredArgsConstructor
 public class PageDto<T> {
     List<T> content;
+    Metadata metadata;
+
+    public PageDto(Page<T> page) {
+        this.content = page.getContent();
+        this.metadata = new Metadata(page.getNumber(), page.getSize(), page.getTotalElements(), page.getTotalPages());
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class Metadata {
+        private long number;
+        private long size;
+        private long totalElements;
+        private long totalPages;
+    }
 }

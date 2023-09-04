@@ -55,10 +55,7 @@ public class NewsServiceImpl implements NewsService {
 
         Page<News> page = newsRepository.findAll(specification, pageable);
 
-        PageDto<NewsDto> pageDto = new PageDto<>();
-        pageDto.setContent(newsMapper.toListDto(page.getContent()));
-
-        return pageDto;
+        return new PageDto<>(page.map(newsMapper::modelToDto));
     }
 
     @Override
@@ -66,10 +63,7 @@ public class NewsServiceImpl implements NewsService {
         log.info("Get news page ({})", pageable);
         Page<News> page = newsRepository.findAll(pageable);
 
-        PageDto<NewsDto> pageDto = new PageDto<>();
-        pageDto.setContent(newsMapper.toListDto(page.getContent()));
-
-        return pageDto;
+        return new PageDto<>(page.map(newsMapper::modelToDto));
     }
 
     @Override
