@@ -25,45 +25,26 @@ Request Body:
 Response Body:
 ```json
 {
-    "content": [
-        {
-            "id": 1,
-            "title": "News_1",
-            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-            "time": "2023-08-26T08:48:18.739+00:00"
-        },
-        {
-            "id": 15,
-            "title": "News_15",
-            "text": "Mi sit amet mauris commodo quis",
-            "time": "2023-08-26T08:48:18.739+00:00"
-        }
-    ],
-    "pageable": {
-        "sort": {
-            "empty": true,
-            "sorted": false,
-            "unsorted": true
-        },
-        "offset": 0,
-        "pageSize": 20,
-        "pageNumber": 0,
-        "unpaged": false,
-        "paged": true
+  "content": [
+    {
+      "id": 1,
+      "title": "News_1",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+      "time": "2023-08-26T08:48:18.739+00:00"
     },
-    "last": true,
-    "totalPages": 1,
-    "totalElements": 2,
-    "size": 20,
+    {
+      "id": 15,
+      "title": "News_15",
+      "text": "Mi sit amet mauris commodo quis",
+      "time": "2023-08-26T08:48:18.739+00:00"
+    }
+  ],
+  "metadata": {
     "number": 0,
-    "sort": {
-        "empty": true,
-        "sorted": false,
-        "unsorted": true
-    },
-    "first": true,
-    "numberOfElements": 2,
-    "empty": false
+    "size": 5,
+    "totalElements": 2,
+    "totalPages": 1
+  }
 }
 ```
 
