@@ -21,7 +21,7 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.io.Serializable;
-import java.util.Arrays;
+import java.util.Collections;
 
 
 @EnableConfigurationProperties(CacheProperties.class)
@@ -53,10 +53,7 @@ public class CacheConfiguration {
                 SimpleCacheManager cacheManager = new SimpleCacheManager();
                 
                 cacheManager.setCaches(
-                        Arrays.asList(
-                                createCache("news"),
-                                createCache("comments")
-                        )
+                        Collections.singletonList(createCache())
                 );
 
                 return cacheManager;
@@ -78,13 +75,13 @@ public class CacheConfiguration {
         }
     }
 
-    private Cache createCache(String name) {
+    private Cache createCache() {
         int capacity = this.properties.getCapacity();
         CacheTypes cacheTypes = this.properties.getType();
 
         return switch (cacheTypes) {
-            case LRU -> new LRUCache(name, capacity);
-            case LFU -> new LFUCache(name, capacity);
+            case LRU -> new LRUCache("news", capacity);
+            case LFU -> new LFUCache("news", capacity);
             default -> null;
         };
     }

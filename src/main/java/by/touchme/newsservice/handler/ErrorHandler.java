@@ -1,6 +1,5 @@
 package by.touchme.newsservice.handler;
 
-import by.touchme.newsservice.exception.CommentNotFoundException;
 import by.touchme.newsservice.exception.NewsNotFoundException;
 import by.touchme.newsservice.record.ErrorMessage;
 import org.slf4j.Logger;
@@ -31,7 +30,7 @@ public class ErrorHandler {
      * @param e NewsNotFoundException or CommentNotFoundException
      * @return Object with error message
      */
-    @ExceptionHandler({NewsNotFoundException.class, CommentNotFoundException.class})
+    @ExceptionHandler(NewsNotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorMessage notFoundException(Exception e, WebRequest request) {
@@ -49,7 +48,7 @@ public class ErrorHandler {
     public ErrorMessage argumentNotValidException(MethodArgumentNotValidException e, WebRequest request) {
         Map<String, String> errors = new HashMap<>();
 
-        e.getBindingResult().getAllErrors().forEach((error) ->{
+        e.getBindingResult().getAllErrors().forEach((error) -> {
 
             String fieldName = ((FieldError) error).getField();
             String message = error.getDefaultMessage();

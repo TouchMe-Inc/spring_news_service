@@ -1,7 +1,6 @@
 package by.touchme.newsservice.service.impl;
 
 import by.touchme.newsservice.criteria.SearchCriteria;
-import by.touchme.newsservice.dto.CommentDto;
 import by.touchme.newsservice.dto.NewsDto;
 import by.touchme.newsservice.dto.PageDto;
 import by.touchme.newsservice.dto.SearchDto;
