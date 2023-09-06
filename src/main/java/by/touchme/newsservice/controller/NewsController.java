@@ -6,11 +6,11 @@ import by.touchme.newsservice.service.NewsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -35,18 +35,21 @@ public class NewsController {
         return new ResponseEntity<>(newsService.getPage(pageable), HttpStatus.OK);
     }
 
-    @CachePut(cacheNames = "news", key = "#result.body.id")
+    // @CachePut(cacheNames = "news", key = "#result.body.id")
+    @PreAuthorize("hasAuthority('ROLE_JOURNALIST,ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<NewsDto> create(@Valid @RequestBody NewsDto news) {
         return new ResponseEntity<>(newsService.create(news), HttpStatus.CREATED);
     }
 
-    @CachePut(cacheNames = "news", key = "#id")
+    // @CachePut(cacheNames = "news", key = "#id")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<NewsDto> updateById(@PathVariable(name = "id") Long id, @Valid @RequestBody NewsDto news) {
         return new ResponseEntity<>(newsService.updateById(id, news), HttpStatus.NO_CONTENT);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @CacheEvict(cacheNames = "news", key = "#id")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
