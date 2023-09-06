@@ -22,6 +22,12 @@ public class News {
     private Long id;
 
     /**
+     * Author of the news.
+     */
+    @Column(name = "author", nullable = false)
+    private String author;
+
+    /**
      * Title of the news.
      */
     @Column(name = "title", nullable = false)

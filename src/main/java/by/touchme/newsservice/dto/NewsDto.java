@@ -13,6 +13,9 @@ public class NewsDto {
     private Long id;
 
     @NotNull
+    private String author;
+
+    @NotNull
     private String title;
 
     @NotNull
