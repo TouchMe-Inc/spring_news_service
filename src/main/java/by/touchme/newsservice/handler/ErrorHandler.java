@@ -2,6 +2,7 @@ package by.touchme.newsservice.handler;
 
 import by.touchme.newsservice.exception.NewsNotFoundException;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,13 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler(value = {AccessDeniedException.class, ExpiredJwtException.class})
-    public ResponseEntity<Object> handleJwtException(Exception ex, WebRequest request) {
+    public ResponseEntity<Object> handleExpiredJwtException(Exception ex, WebRequest request) {
         return prepareErrorMessage(ex, request, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(value = {MalformedJwtException.class})
+    public ResponseEntity<Object> handleMalformedJwtException(Exception ex, WebRequest request) {
+        return prepareErrorMessage(ex, request, HttpStatus.BAD_REQUEST);
     }
 
     /**
