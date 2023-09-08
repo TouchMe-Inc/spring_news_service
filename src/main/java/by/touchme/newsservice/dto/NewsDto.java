@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 @RequiredArgsConstructor
-public class NewsDto {
+public class NewsDto implements AclEntity {
 
     private Long id;
 
