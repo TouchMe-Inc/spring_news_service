@@ -1,6 +1,8 @@
 package by.touchme.newsservice.entity;
 
+import by.touchme.newsservice.dto.AclEntity;
 import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -20,6 +22,12 @@ public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /**
+     * Author of the news.
+     */
+    @Column(name = "author", nullable = false)
+    private String author;
 
     /**
      * Title of the news.

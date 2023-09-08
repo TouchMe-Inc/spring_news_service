@@ -7,6 +7,9 @@ databaseChangeLog:
             tableName: news
             columns:
               - column:
+                  name: author
+                  value: "admin"
+              - column:
                   name: title
                   value: "News_1"
               - column:
@@ -15,6 +18,9 @@ databaseChangeLog:
         - insert:
             tableName: news
             columns:
+              - column:
+                  name: author
+                  value: "admin"
               - column:
                   name: title
                   value: "News_2"
@@ -25,6 +31,9 @@ databaseChangeLog:
             tableName: news
             columns:
               - column:
+                  name: author
+                  value: "admin"
+              - column:
                   name: title
                   value: "News_3"
               - column:
@@ -33,6 +42,9 @@ databaseChangeLog:
         - insert:
             tableName: news
             columns:
+              - column:
+                  name: author
+                  value: "admin"
               - column:
                   name: title
                   value: "News_4"
@@ -43,6 +55,9 @@ databaseChangeLog:
             tableName: news
             columns:
               - column:
+                  name: author
+                  value: "admin"
+              - column:
                   name: title
                   value: "News_5"
               - column:
@@ -51,6 +66,9 @@ databaseChangeLog:
         - insert:
             tableName: news
             columns:
+              - column:
+                  name: author
+                  value: "admin"
               - column:
                   name: title
                   value: "News_6"
@@ -61,6 +79,9 @@ databaseChangeLog:
             tableName: news
             columns:
               - column:
+                  name: author
+                  value: "admin"
+              - column:
                   name: title
                   value: "News_7"
               - column:
@@ -69,6 +90,9 @@ databaseChangeLog:
         - insert:
             tableName: news
             columns:
+              - column:
+                  name: author
+                  value: "admin"
               - column:
                   name: title
                   value: "News_8"
@@ -79,6 +103,9 @@ databaseChangeLog:
             tableName: news
             columns:
               - column:
+                  name: author
+                  value: "admin"
+              - column:
                   name: title
                   value: "News_9"
               - column:
@@ -87,6 +114,9 @@ databaseChangeLog:
         - insert:
             tableName: news
             columns:
+              - column:
+                  name: author
+                  value: "admin"
               - column:
                   name: title
                   value: "News_10"
@@ -97,6 +127,9 @@ databaseChangeLog:
             tableName: news
             columns:
               - column:
+                  name: author
+                  value: "admin"
+              - column:
                   name: title
                   value: "News_11"
               - column:
@@ -105,6 +138,9 @@ databaseChangeLog:
         - insert:
             tableName: news
             columns:
+              - column:
+                  name: author
+                  value: "admin"
               - column:
                   name: title
                   value: "News_12"
@@ -115,6 +151,9 @@ databaseChangeLog:
             tableName: news
             columns:
               - column:
+                  name: author
+                  value: "admin"
+              - column:
                   name: title
                   value: "News_13"
               - column:
@@ -123,6 +162,9 @@ databaseChangeLog:
         - insert:
             tableName: news
             columns:
+              - column:
+                  name: author
+                  value: "admin"
               - column:
                   name: title
                   value: "News_14"
@@ -133,6 +175,9 @@ databaseChangeLog:
             tableName: news
             columns:
               - column:
+                  name: author
+                  value: "admin"
+              - column:
                   name: title
                   value: "News_15"
               - column:
@@ -141,6 +186,9 @@ databaseChangeLog:
         - insert:
             tableName: news
             columns:
+              - column:
+                  name: author
+                  value: "admin"
               - column:
                   name: title
                   value: "News_16"
@@ -151,6 +199,9 @@ databaseChangeLog:
             tableName: news
             columns:
               - column:
+                  name: author
+                  value: "admin"
+              - column:
                   name: title
                   value: "News_17"
               - column:
@@ -159,6 +210,9 @@ databaseChangeLog:
         - insert:
             tableName: news
             columns:
+              - column:
+                  name: author
+                  value: "admin"
               - column:
                   name: title
                   value: "News_18"
@@ -169,6 +223,9 @@ databaseChangeLog:
             tableName: news
             columns:
               - column:
+                  name: author
+                  value: "admin"
+              - column:
                   name: title
                   value: "News_19"
               - column:
@@ -177,6 +234,9 @@ databaseChangeLog:
         - insert:
             tableName: news
             columns:
+              - column:
+                  name: author
+                  value: "admin"
               - column:
                   name: title
                   value: "News_20"
