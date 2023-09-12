@@ -35,7 +35,7 @@ public class NewsControllerUnitTest {
 
     @DisplayName("JUnit test for NewsController.getPage")
     @Test
-    public void getPage() throws Exception {
+    void getPage() throws Exception {
         mockMvc
                 .perform(
                         get("/v1/news")
@@ -48,7 +48,7 @@ public class NewsControllerUnitTest {
 
     @DisplayName("JUnit test for NewsController.getById")
     @Test
-    public void getById() throws Exception {
+    void getById() throws Exception {
         NewsDto firstNews = new NewsDto();
         firstNews.setId(1L);
         firstNews.setTitle("Lorem Ipsum");
@@ -69,7 +69,7 @@ public class NewsControllerUnitTest {
 
     @DisplayName("JUnit test for NewsController.create")
     @Test
-    public void create() throws Exception {
+    void create() throws Exception {
         NewsDto createNews = new NewsDto();
         createNews.setTitle("Lorem Ipsum");
         createNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
@@ -94,7 +94,7 @@ public class NewsControllerUnitTest {
 
     @DisplayName("JUnit test for NewsController.updateById")
     @Test
-    public void updateById() throws Exception {
+    void updateById() throws Exception {
         NewsDto updateNews = new NewsDto();
         updateNews.setTitle("Lorem Ipsum");
         updateNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
@@ -120,7 +120,7 @@ public class NewsControllerUnitTest {
 
     @DisplayName("JUnit test for NewsController.deleteById")
     @Test
-    public void deleteById() throws Exception {
+    void deleteById() throws Exception {
         mockMvc
                 .perform(
                         delete("/v1/news/{id}", 1L)

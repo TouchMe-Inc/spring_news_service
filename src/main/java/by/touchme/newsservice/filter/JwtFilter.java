@@ -6,8 +6,6 @@ import by.touchme.newsservice.provider.JwtProvider;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +15,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
@@ -34,28 +31,6 @@ public class JwtFilter extends OncePerRequestFilter {
     private static final String AUTHORIZATION = "Authorization";
 
     private final JwtProvider jwtProvider;
-
-//    @Override
-//    public void doFilter(ServletRequest req, ServletResponse res, FilterChain fc) throws ServletException, IOException {
-//        HttpServletRequest request = (HttpServletRequest) req;
-//        HttpServletResponse response = (HttpServletResponse) res;
-//
-//        String token = getTokenFromRequest(request);
-//
-//        try {
-//            if (token != null && jwtProvider.validateAccessToken(token)) {
-//                Claims claims = jwtProvider.getAccessClaims(token);
-//                JwtAuthentication jwtInfoToken = generate(claims);
-//                jwtInfoToken.setAuthenticated(true);
-//                SecurityContextHolder.getContext().setAuthentication(jwtInfoToken);
-//            }
-//        } catch (Exception e) {
-//            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token");
-//            return;
-//        }
-//
-//        fc.doFilter(req, res);
-//    }
 
     @Autowired
     @Qualifier("handlerExceptionResolver")

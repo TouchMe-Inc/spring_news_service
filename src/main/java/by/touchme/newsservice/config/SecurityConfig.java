@@ -3,7 +3,6 @@ package by.touchme.newsservice.config;
 import by.touchme.newsservice.cache.LFUCache;
 import by.touchme.newsservice.cache.LRUCache;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
