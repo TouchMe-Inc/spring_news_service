@@ -69,9 +69,9 @@ public class NewsControllerIntegrationTest {
                 .andDo(document(DOC_IDENTIFIER));
     }
 
-    @DisplayName("Integration test for NewsController.getById with response NotFound")
+    @DisplayName("Integration test for NewsController.getById with non existent id")
     @Test
-    void getByIdNotFound() throws Exception {
+    void getByIdWithNoтExistentId() throws Exception {
         this.mockMvc
                 .perform(
                         get(URL + "/{id}", NOT_FOUND_ID)
@@ -103,6 +103,23 @@ public class NewsControllerIntegrationTest {
                 .andDo(document(DOC_IDENTIFIER));
     }
 
+    @DisplayName("Integration test for NewsController.create with incorrect NewsDto")
+    @WithMockUser(authorities = {"ROLE_ADMIN"})
+    @Test
+    void createWithIncorrectDto() throws Exception {
+        NewsDto createNews = new NewsDto();
+
+        mockMvc.perform(
+                        post(URL)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(createNews))
+                )
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andDo(document(DOC_IDENTIFIER));
+    }
+
     @DisplayName("Integration test for NewsController.updateById")
     @WithMockUser(authorities = {"ROLE_ADMIN"})
     @Test
@@ -123,10 +140,10 @@ public class NewsControllerIntegrationTest {
                 .andDo(document(DOC_IDENTIFIER));
     }
 
-    @DisplayName("Integration test for NewsController.updateById with response NotFound")
+    @DisplayName("Integration test for NewsController.updateById with non existent id")
     @WithMockUser(authorities = {"ROLE_ADMIN"})
     @Test
-    void updateByIdNotFound() throws Exception {
+    void updateByIdWithNoтExistentId() throws Exception {
         NewsDto updateNews = new NewsDto();
         updateNews.setAuthor("Admin");
         updateNews.setTitle("Lorem Ipsum");
@@ -140,6 +157,23 @@ public class NewsControllerIntegrationTest {
                 )
                 .andDo(print())
                 .andExpect(status().isNotFound())
+                .andDo(document(DOC_IDENTIFIER));
+    }
+
+    @DisplayName("Integration test for NewsController.updateById with incorrect NewsDto")
+    @WithMockUser(authorities = {"ROLE_ADMIN"})
+    @Test
+    void updateByIdIncorrectDto() throws Exception {
+        NewsDto updateNews = new NewsDto();
+
+        mockMvc.perform(
+                        put(URL + "/{id}", NOT_FOUND_ID)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(updateNews))
+                )
+                .andDo(print())
+                .andExpect(status().isBadRequest())
                 .andDo(document(DOC_IDENTIFIER));
     }
 
@@ -158,10 +192,10 @@ public class NewsControllerIntegrationTest {
                 .andDo(document(DOC_IDENTIFIER));
     }
 
-    @DisplayName("Integration test for NewsController.deleteById with response NotFound")
+    @DisplayName("Integration test for NewsController.deleteById with non existent id")
     @WithMockUser(authorities = {"ROLE_ADMIN"})
     @Test
-    void deleteByIdNotFound() throws Exception {
+    void deleteByIdWithNoтExistentId() throws Exception {
         this.mockMvc
                 .perform(
                         delete(URL + "/{id}", NOT_FOUND_ID)
