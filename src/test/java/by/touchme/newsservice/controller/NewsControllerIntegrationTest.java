@@ -71,7 +71,7 @@ public class NewsControllerIntegrationTest {
 
     @DisplayName("Integration test for NewsController.getById with non existent id")
     @Test
-    void getByIdWithNoтExistentId() throws Exception {
+    void getByIdWithNonExistentId() throws Exception {
         this.mockMvc
                 .perform(
                         get(URL + "/{id}", NOT_FOUND_ID)
@@ -143,7 +143,7 @@ public class NewsControllerIntegrationTest {
     @DisplayName("Integration test for NewsController.updateById with non existent id")
     @WithMockUser(authorities = {"ROLE_ADMIN"})
     @Test
-    void updateByIdWithNoтExistentId() throws Exception {
+    void updateByIdWithNonExistentId() throws Exception {
         NewsDto updateNews = new NewsDto();
         updateNews.setAuthor("Admin");
         updateNews.setTitle("Lorem Ipsum");
@@ -195,7 +195,7 @@ public class NewsControllerIntegrationTest {
     @DisplayName("Integration test for NewsController.deleteById with non existent id")
     @WithMockUser(authorities = {"ROLE_ADMIN"})
     @Test
-    void deleteByIdWithNoтExistentId() throws Exception {
+    void deleteByIdWithNonExistentId() throws Exception {
         this.mockMvc
                 .perform(
                         delete(URL + "/{id}", NOT_FOUND_ID)
