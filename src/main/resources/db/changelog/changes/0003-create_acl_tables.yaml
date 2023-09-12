@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create_news_table
+      id: create_acl_tables
       author: TouchMe
       changes:
         - createTable:
