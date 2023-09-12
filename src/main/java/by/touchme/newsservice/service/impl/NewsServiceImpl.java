@@ -13,6 +13,7 @@ import by.touchme.newsservice.specification.NewsSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -68,7 +69,7 @@ public class NewsServiceImpl implements NewsService {
         return new PageDto<>(page.map(newsMapper::modelToDto));
     }
 
-    @Cacheable(cacheNames = "news", key = "#result.id")
+    @CachePut(cacheNames = "news", key = "#result.id")
     @Override
     public NewsDto create(NewsDto news) {
         log.info("Create news ({})", news);
@@ -79,7 +80,7 @@ public class NewsServiceImpl implements NewsService {
         );
     }
 
-    @CacheEvict(cacheNames = "news", key = "#id")
+    @CachePut(cacheNames = "news", key = "#id")
     @Override
     public NewsDto updateById(Long id, NewsDto news) {
         if (!newsRepository.existsById(id)) {

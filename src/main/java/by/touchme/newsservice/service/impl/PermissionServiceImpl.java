@@ -36,7 +36,6 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public void addPermissionForSid(AclEntity targetObj, Permission permission, Sid sid) {
-
         final TransactionTemplate tt = new TransactionTemplate(transactionManager);
         tt.execute(new TransactionCallbackWithoutResult() {
             @Override

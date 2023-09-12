@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.acls.domain.BasePermission;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -41,8 +42,10 @@ public class NewsController {
     public ResponseEntity<NewsDto> create(@Valid @RequestBody NewsDto news, Authentication authentication) {
         NewsDto createdNews = newsService.create(news);
 
-        permissionService.addPermissionForUser(createdNews, BasePermission.DELETE, authentication.getName());
-        permissionService.addPermissionForUser(createdNews, BasePermission.WRITE, authentication.getName());
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        permissionService.addPermissionForUser(createdNews, BasePermission.DELETE, username);
+        permissionService.addPermissionForUser(createdNews, BasePermission.WRITE, username);
 
         return new ResponseEntity<>(createdNews, HttpStatus.CREATED);
     }

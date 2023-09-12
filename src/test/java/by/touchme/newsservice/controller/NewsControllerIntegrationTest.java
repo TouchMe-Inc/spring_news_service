@@ -1,13 +1,16 @@
 package by.touchme.newsservice.controller;
 
 import by.touchme.newsservice.dto.NewsDto;
+import by.touchme.newsservice.service.PermissionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -34,6 +37,9 @@ public class NewsControllerIntegrationTest {
     private final Long NOT_FOUND_ID = 0L;
     private final Long CORRECT_ID = 1L;
     private final Long DELETE_ID = 2L;
+
+    @MockBean
+    private PermissionService permissionService;
 
     @DisplayName("Integration test for NewsController.getPage")
     @Test
@@ -63,7 +69,7 @@ public class NewsControllerIntegrationTest {
                 .andDo(document(DOC_IDENTIFIER));
     }
 
-    @DisplayName("Integration test for NewsController.getById")
+    @DisplayName("Integration test for NewsController.getById with response NotFound")
     @Test
     void getByIdNotFound() throws Exception {
         this.mockMvc
@@ -78,9 +84,11 @@ public class NewsControllerIntegrationTest {
     }
 
     @DisplayName("Integration test for NewsController.create")
+    @WithMockUser(authorities = {"ROLE_ADMIN"})
     @Test
     void create() throws Exception {
         NewsDto createNews = new NewsDto();
+        createNews.setAuthor("Admin");
         createNews.setTitle("Lorem Ipsum");
         createNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
@@ -96,9 +104,11 @@ public class NewsControllerIntegrationTest {
     }
 
     @DisplayName("Integration test for NewsController.updateById")
+    @WithMockUser(authorities = {"ROLE_ADMIN"})
     @Test
     void updateById() throws Exception {
         NewsDto updateNews = new NewsDto();
+        updateNews.setAuthor("Admin");
         updateNews.setTitle("Lorem Ipsum");
         updateNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
@@ -113,10 +123,12 @@ public class NewsControllerIntegrationTest {
                 .andDo(document(DOC_IDENTIFIER));
     }
 
-    @DisplayName("Integration test for NewsController.updateById")
+    @DisplayName("Integration test for NewsController.updateById with response NotFound")
+    @WithMockUser(authorities = {"ROLE_ADMIN"})
     @Test
     void updateByIdNotFound() throws Exception {
         NewsDto updateNews = new NewsDto();
+        updateNews.setAuthor("Admin");
         updateNews.setTitle("Lorem Ipsum");
         updateNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
@@ -132,6 +144,7 @@ public class NewsControllerIntegrationTest {
     }
 
     @DisplayName("Integration test for NewsController.deleteById")
+    @WithMockUser(authorities = {"ROLE_ADMIN"})
     @Test
     void deleteById() throws Exception {
         this.mockMvc
@@ -145,7 +158,8 @@ public class NewsControllerIntegrationTest {
                 .andDo(document(DOC_IDENTIFIER));
     }
 
-    @DisplayName("Integration test for NewsController.deleteById")
+    @DisplayName("Integration test for NewsController.deleteById with response NotFound")
+    @WithMockUser(authorities = {"ROLE_ADMIN"})
     @Test
     void deleteByIdNotFound() throws Exception {
         this.mockMvc

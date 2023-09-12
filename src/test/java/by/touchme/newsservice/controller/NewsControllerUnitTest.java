@@ -1,14 +1,19 @@
 package by.touchme.newsservice.controller;
 
 import by.touchme.newsservice.dto.NewsDto;
+import by.touchme.newsservice.filter.JwtFilter;
 import by.touchme.newsservice.service.NewsService;
+import by.touchme.newsservice.service.PermissionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -21,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles(profiles = "test")
+@AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(NewsController.class)
 public class NewsControllerUnitTest {
 
@@ -33,7 +39,17 @@ public class NewsControllerUnitTest {
     @MockBean
     private NewsService newsService;
 
+    @MockBean
+    private PermissionService permissionService;
+
+    @MockBean
+    private JwtFilter jwtFilter;
+
+    @MockBean
+    private Authentication authentication;
+
     @DisplayName("JUnit test for NewsController.getPage")
+    @WithMockUser
     @Test
     void getPage() throws Exception {
         mockMvc
@@ -47,6 +63,7 @@ public class NewsControllerUnitTest {
     }
 
     @DisplayName("JUnit test for NewsController.getById")
+    @WithMockUser
     @Test
     void getById() throws Exception {
         NewsDto firstNews = new NewsDto();
@@ -68,9 +85,11 @@ public class NewsControllerUnitTest {
     }
 
     @DisplayName("JUnit test for NewsController.create")
+    @WithMockUser
     @Test
     void create() throws Exception {
         NewsDto createNews = new NewsDto();
+        createNews.setAuthor("Admin");
         createNews.setTitle("Lorem Ipsum");
         createNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
@@ -93,9 +112,11 @@ public class NewsControllerUnitTest {
     }
 
     @DisplayName("JUnit test for NewsController.updateById")
+    @WithMockUser
     @Test
     void updateById() throws Exception {
         NewsDto updateNews = new NewsDto();
+        updateNews.setAuthor("Admin");
         updateNews.setTitle("Lorem Ipsum");
         updateNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
@@ -119,6 +140,7 @@ public class NewsControllerUnitTest {
     }
 
     @DisplayName("JUnit test for NewsController.deleteById")
+    @WithMockUser
     @Test
     void deleteById() throws Exception {
         mockMvc
