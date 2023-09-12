@@ -26,20 +26,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class NewsControllerIntegrationTest {
 
     @Autowired
-    private ObjectMapper objectMapper;
+    ObjectMapper objectMapper;
 
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
 
-    private final String URL = "/v1/news";
-    private final String DOC_IDENTIFIER = "news/{methodName}";
+    final String URL = "/v1/news";
+    final String DOC_IDENTIFIER = "news/{methodName}";
 
-    private final Long NOT_FOUND_ID = 0L;
-    private final Long CORRECT_ID = 1L;
-    private final Long DELETE_ID = 2L;
+    final Long NOT_FOUND_ID = 0L;
+    final Long CORRECT_ID = 1L;
+    final Long DELETE_ID = 2L;
 
     @MockBean
-    private PermissionService permissionService;
+    PermissionService permissionService;
 
     @DisplayName("Integration test for NewsController.getPage")
     @Test

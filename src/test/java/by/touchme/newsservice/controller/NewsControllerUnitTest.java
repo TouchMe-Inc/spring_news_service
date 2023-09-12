@@ -31,22 +31,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class NewsControllerUnitTest {
 
     @Autowired
-    private ObjectMapper objectMapper;
+    ObjectMapper objectMapper;
 
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
 
     @MockBean
-    private NewsService newsService;
+    NewsService newsService;
 
     @MockBean
-    private PermissionService permissionService;
+    PermissionService permissionService;
 
     @MockBean
-    private JwtFilter jwtFilter;
+    JwtFilter jwtFilter;
 
     @MockBean
-    private Authentication authentication;
+    Authentication authentication;
 
     @DisplayName("JUnit test for NewsController.getPage")
     @WithMockUser
