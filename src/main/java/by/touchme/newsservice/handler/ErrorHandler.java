@@ -29,11 +29,34 @@ public class ErrorHandler {
         return prepareErrorMessage(ex, request, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(value = {AccessDeniedException.class, ExpiredJwtException.class})
+    /**
+     * Unauthorized access.
+     *
+     * @param ex AccessDeniedException
+     * @return Object with error message
+     */
+    @ExceptionHandler(value = AccessDeniedException.class)
+    public ResponseEntity<Object> handleAccessDenyException(Exception ex, WebRequest request) {
+        return prepareErrorMessage(ex, request, HttpStatus.FORBIDDEN);
+    }
+
+    /**
+     * Expired Jwt token.
+     *
+     * @param ex ExpiredJwtException
+     * @return Object with error message
+     */
+    @ExceptionHandler(value = ExpiredJwtException.class)
     public ResponseEntity<Object> handleExpiredJwtException(Exception ex, WebRequest request) {
         return prepareErrorMessage(ex, request, HttpStatus.FORBIDDEN);
     }
 
+    /**
+     * Malformed Jwt token.
+     *
+     * @param ex MalformedJwtException
+     * @return Object with error message
+     */
     @ExceptionHandler(value = {MalformedJwtException.class})
     public ResponseEntity<Object> handleMalformedJwtException(Exception ex, WebRequest request) {
         return prepareErrorMessage(ex, request, HttpStatus.BAD_REQUEST);
@@ -41,6 +64,9 @@ public class ErrorHandler {
 
     /**
      * Any unhandled exceptions.
+     *
+     * @param ex Exception
+     * @return Object with error message
      */
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<Object> handleOtherExceptions(Exception ex, WebRequest request) {
