@@ -29,6 +29,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(NewsController.class)
 public class NewsControllerUnitTest {
 
+
+    final String URL = "/v1/news";
+
     @Autowired
     ObjectMapper objectMapper;
 
@@ -50,7 +53,7 @@ public class NewsControllerUnitTest {
     void getPage() throws Exception {
         mockMvc
                 .perform(
-                        get("/v1/news")
+                        get(URL)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
@@ -72,7 +75,7 @@ public class NewsControllerUnitTest {
 
         mockMvc
                 .perform(
-                        get("/v1/news/{id}", 1L)
+                        get(URL+ "/{id}", 1L)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
@@ -98,7 +101,7 @@ public class NewsControllerUnitTest {
         when(newsService.create(createNews)).thenReturn(createdNews);
 
         mockMvc.perform(
-                        post("/v1/news")
+                        post(URL)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(createNews))
@@ -126,7 +129,7 @@ public class NewsControllerUnitTest {
 
         mockMvc
                 .perform(
-                        put("/v1/news/{id}", 1L)
+                        put(URL+ "/{id}", 1L)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(updateNews))
@@ -141,7 +144,7 @@ public class NewsControllerUnitTest {
     void deleteById() throws Exception {
         mockMvc
                 .perform(
-                        delete("/v1/news/{id}", 1L)
+                        delete(URL+ "/{id}", 1L)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
