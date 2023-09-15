@@ -181,7 +181,7 @@ public class NewsControllerIntegrationTest {
     @WithMockUser(authorities = {"ROLE_ADMIN"})
     @Test
     void deleteById() throws Exception {
-        this.mockMvc
+        mockMvc
                 .perform(
                         delete(URL + "/{id}", DELETE_ID)
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -196,7 +196,7 @@ public class NewsControllerIntegrationTest {
     @WithMockUser(authorities = {"ROLE_ADMIN"})
     @Test
     void deleteByIdWithNonExistentId() throws Exception {
-        this.mockMvc
+        mockMvc
                 .perform(
                         delete(URL + "/{id}", NOT_FOUND_ID)
                                 .contentType(MediaType.APPLICATION_JSON)
