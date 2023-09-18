@@ -6,7 +6,9 @@ import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -29,11 +31,45 @@ public class ErrorHandler {
         return prepareErrorMessage(ex, request, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(value = {AccessDeniedException.class, ExpiredJwtException.class})
+    /**
+     * Validation via @Valid annotation failed or Empty required body.
+     *
+     * @param ex MethodArgumentNotValidException or HttpMessageNotReadableException
+     * @return Object with error message
+     */
+    @ExceptionHandler(value = {MethodArgumentNotValidException.class, HttpMessageNotReadableException.class})
+    public ResponseEntity<Object> handleNotValidException(Exception ex, WebRequest request) {
+        return prepareErrorMessage(ex, request, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Unauthorized access.
+     *
+     * @param ex AccessDeniedException
+     * @return Object with error message
+     */
+    @ExceptionHandler(value = AccessDeniedException.class)
+    public ResponseEntity<Object> handleAccessDenyException(Exception ex, WebRequest request) {
+        return prepareErrorMessage(ex, request, HttpStatus.FORBIDDEN);
+    }
+
+    /**
+     * Expired Jwt token.
+     *
+     * @param ex ExpiredJwtException
+     * @return Object with error message
+     */
+    @ExceptionHandler(value = ExpiredJwtException.class)
     public ResponseEntity<Object> handleExpiredJwtException(Exception ex, WebRequest request) {
         return prepareErrorMessage(ex, request, HttpStatus.FORBIDDEN);
     }
 
+    /**
+     * Malformed Jwt token.
+     *
+     * @param ex MalformedJwtException
+     * @return Object with error message
+     */
     @ExceptionHandler(value = {MalformedJwtException.class})
     public ResponseEntity<Object> handleMalformedJwtException(Exception ex, WebRequest request) {
         return prepareErrorMessage(ex, request, HttpStatus.BAD_REQUEST);
@@ -41,10 +77,12 @@ public class ErrorHandler {
 
     /**
      * Any unhandled exceptions.
+     *
+     * @param ex Exception
+     * @return Object with error message
      */
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<Object> handleOtherExceptions(Exception ex, WebRequest request) {
-        System.out.println(ex.getClass());
         return prepareErrorMessage(ex, request, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

@@ -1,14 +1,18 @@
 package by.touchme.newsservice.controller;
 
 import by.touchme.newsservice.dto.NewsDto;
+import by.touchme.newsservice.filter.JwtFilter;
 import by.touchme.newsservice.service.NewsService;
+import by.touchme.newsservice.service.PermissionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -21,24 +25,35 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles(profiles = "test")
+@AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(NewsController.class)
 public class NewsControllerUnitTest {
 
-    @Autowired
-    private ObjectMapper objectMapper;
+
+    final String URL = "/v1/news";
 
     @Autowired
-    private MockMvc mockMvc;
+    ObjectMapper objectMapper;
+
+    @Autowired
+    MockMvc mockMvc;
 
     @MockBean
-    private NewsService newsService;
+    NewsService newsService;
+
+    @MockBean
+    PermissionService permissionService;
+
+    @MockBean
+    JwtFilter jwtFilter;
 
     @DisplayName("JUnit test for NewsController.getPage")
+    @WithMockUser
     @Test
-    public void getPage() throws Exception {
+    void getPage() throws Exception {
         mockMvc
                 .perform(
-                        get("/v1/news")
+                        get(URL)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
@@ -47,8 +62,9 @@ public class NewsControllerUnitTest {
     }
 
     @DisplayName("JUnit test for NewsController.getById")
+    @WithMockUser
     @Test
-    public void getById() throws Exception {
+    void getById() throws Exception {
         NewsDto firstNews = new NewsDto();
         firstNews.setId(1L);
         firstNews.setTitle("Lorem Ipsum");
@@ -59,7 +75,7 @@ public class NewsControllerUnitTest {
 
         mockMvc
                 .perform(
-                        get("/v1/news/{id}", 1L)
+                        get(URL+ "/{id}", 1L)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
@@ -68,9 +84,11 @@ public class NewsControllerUnitTest {
     }
 
     @DisplayName("JUnit test for NewsController.create")
+    @WithMockUser
     @Test
-    public void create() throws Exception {
+    void create() throws Exception {
         NewsDto createNews = new NewsDto();
+        createNews.setAuthor("Admin");
         createNews.setTitle("Lorem Ipsum");
         createNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
@@ -83,7 +101,7 @@ public class NewsControllerUnitTest {
         when(newsService.create(createNews)).thenReturn(createdNews);
 
         mockMvc.perform(
-                        post("/v1/news")
+                        post(URL)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(createNews))
@@ -93,9 +111,11 @@ public class NewsControllerUnitTest {
     }
 
     @DisplayName("JUnit test for NewsController.updateById")
+    @WithMockUser
     @Test
-    public void updateById() throws Exception {
+    void updateById() throws Exception {
         NewsDto updateNews = new NewsDto();
+        updateNews.setAuthor("Admin");
         updateNews.setTitle("Lorem Ipsum");
         updateNews.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
@@ -109,7 +129,7 @@ public class NewsControllerUnitTest {
 
         mockMvc
                 .perform(
-                        put("/v1/news/{id}", 1L)
+                        put(URL+ "/{id}", 1L)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(updateNews))
@@ -119,11 +139,12 @@ public class NewsControllerUnitTest {
     }
 
     @DisplayName("JUnit test for NewsController.deleteById")
+    @WithMockUser
     @Test
-    public void deleteById() throws Exception {
+    void deleteById() throws Exception {
         mockMvc
                 .perform(
-                        delete("/v1/news/{id}", 1L)
+                        delete(URL+ "/{id}", 1L)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )

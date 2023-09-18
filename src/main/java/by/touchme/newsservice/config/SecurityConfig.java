@@ -1,16 +1,18 @@
 package by.touchme.newsservice.config;
 
-import by.touchme.newsservice.cache.LFUCache;
-import by.touchme.newsservice.cache.LRUCache;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
+import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.acls.AclPermissionEvaluator;
-import org.springframework.security.acls.domain.*;
+import org.springframework.security.acls.domain.SpringCacheBasedAclCache;
+import org.springframework.security.acls.domain.ConsoleAuditLogger;
+import org.springframework.security.acls.domain.DefaultPermissionGrantingStrategy;
+import org.springframework.security.acls.domain.AclAuthorizationStrategy;
+import org.springframework.security.acls.domain.AclAuthorizationStrategyImpl;
 import org.springframework.security.acls.jdbc.BasicLookupStrategy;
 import org.springframework.security.acls.jdbc.JdbcMutableAclService;
 import org.springframework.security.acls.jdbc.LookupStrategy;
@@ -19,7 +21,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.sql.DataSource;
-import java.util.Objects;
 
 
 @RequiredArgsConstructor
@@ -28,7 +29,6 @@ import java.util.Objects;
 public class SecurityConfig {
 
     private final DataSource dataSource;
-    private final CacheProperties properties;
 
     @Bean
     public JdbcMutableAclService aclService() {
@@ -53,7 +53,7 @@ public class SecurityConfig {
     @Bean
     public SpringCacheBasedAclCache aclCache() {
         return new SpringCacheBasedAclCache(
-                Objects.requireNonNull(createCache()),
+                cache(),
                 permissionGrantingStrategy(),
                 aclAuthorizationStrategy()
         );
@@ -77,14 +77,7 @@ public class SecurityConfig {
         return expressionHandler;
     }
 
-    private Cache createCache() {
-        int capacity = this.properties.getCapacity();
-        CacheTypes cacheTypes = this.properties.getType();
-
-        return switch (cacheTypes) {
-            case LRU -> new LRUCache("aclCache", capacity);
-            case LFU -> new LFUCache("aclCache", capacity);
-            default -> null;
-        };
+    private Cache cache() {
+        return new ConcurrentMapCache("acl");
     }
 }
